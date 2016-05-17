@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.immrwk.myworkspace.AppConfig;
 import com.immrwk.myworkspace.R;
 import com.immrwk.myworkspace.api.FunctionTag;
 import com.immrwk.myworkspace.bean.UpdateInfo;
@@ -17,10 +18,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Timer;
+
 /**
  * Created by Administrator on 2016/5/15 0015.
  */
-public class WelcomeActivity extends Activity{
+public class WelcomeActivity extends BaseActivity{
 
     private RequestQueue mRequestQueue;
 
@@ -29,7 +32,7 @@ public class WelcomeActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
-        UserFunction.updateVersion(mRequestQueue,"1.0",mHandler);
+        UserFunction.updateVersion(mRequestQueue, AppConfig.versionCode,mHandler);
     }
 
     @Override
@@ -46,21 +49,42 @@ public class WelcomeActivity extends Activity{
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case FunctionTag.UPDATE:
-                    Log.i("wk",msg.obj.toString());
-                    UpdateInfo info = new UpdateInfo();
                     JSONArray jarr = (JSONArray) msg.obj;
-                    for(int i = 0; i < jarr.length();i++){
-                        try {
-                            String str = jarr.getString(i);
-                            JSONObject result = new JSONObject(str);
-                            info.setmMsg(result.getString("msg"));
-                            info.setmSucess(result.getString("success"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        Log.i("wk",info.toString());
+                    JSONObject obj;
+                    UpdateInfo info = new UpdateInfo();
+                    try {
+                        obj = jarr.getJSONObject(0);
+                        info.setSucess(obj.getString("success"));
+                        info.setMsg(obj.getString("msg"));
+                        info.setUserId(obj.getString("userId"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
+
+                    if(info.getSucess().equals("false")){
+                        Log.i("welcomeactivity","版本已是最新");
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                            }
+                        });
+                    }else if(info.getSucess().equals("true")){
+                        Log.i("welcomeactivity","有新版本可用");
+                    }
+
+//                    for(int i = 0; i < jarr.length();i++){
+//
+//                        try {
+//                            JSONObject result = jarr.getJSONObject(i);
+//                            UpdateInfo info = new UpdateInfo();
+//                            info.setmMsg(result.getString("msg"));
+//                            info.setmSucess(result.getString("success"));
+//                            Log.i("kkkk",info.toString());
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
 
                     break;
             }
