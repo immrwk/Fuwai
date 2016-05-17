@@ -5,30 +5,40 @@ package com.immrwk.myworkspace.bean;
  */
 public class UpdateInfo {
 
-    private String mSucess;
-    private String mMsg;
+    private String sucess;
+    private String msg;
+    private String userId;
 
-    public String getmSucess() {
-        return mSucess;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setmSucess(String mSucess) {
-        this.mSucess = mSucess;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getmMsg() {
-        return mMsg;
+    public String getSucess() {
+        return sucess;
     }
 
-    public void setmMsg(String mMsg) {
-        this.mMsg = mMsg;
+    public void setSucess(String sucess) {
+        this.sucess = sucess;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     @Override
     public String toString() {
         return "UpdateInfo{" +
-                "mSucess='" + mSucess + '\'' +
-                ", mMsg='" + mMsg + '\'' +
+                "sucess='" + sucess + '\'' +
+                ", msg='" + msg + '\'' +
+                ", userId='" + userId + '\'' +
                 '}';
     }
 }
