@@ -1,6 +1,6 @@
 package com.immrwk.myworkspace.ui;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,8 +17,6 @@ import com.immrwk.myworkspace.function.UserFunction;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Timer;
 
 /**
  * Created by Administrator on 2016/5/15 0015.
@@ -63,12 +61,10 @@ public class WelcomeActivity extends BaseActivity{
 
                     if(info.getSucess().equals("false")){
                         Log.i("welcomeactivity","版本已是最新");
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                            }
-                        });
+                        Intent intent = new Intent(WelcomeActivity.this,MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        getApplicationContext().startActivity(intent);
+                        finish();
                     }else if(info.getSucess().equals("true")){
                         Log.i("welcomeactivity","有新版本可用");
                     }

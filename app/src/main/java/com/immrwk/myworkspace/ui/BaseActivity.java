@@ -12,7 +12,7 @@ import android.widget.Toast;
 public class BaseActivity extends Activity {
 
     private final int TIME_INTERVAL = 800;
-    private long mBackPressed = System.currentTimeMillis();
+    private long mBackPressed = 0;
 
     @Override
     public void onBackPressed()
