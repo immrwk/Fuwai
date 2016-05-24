@@ -6,4 +6,4 @@
 .DS_Store
 /build
 /captures
-./app/src/main/java/com/immrwk/myworkspace/api/FuwaiAPI.java
+app/src/main/java/com/immrwk/myworkspace/api/FuwaiAPI.java
