@@ -61,7 +61,8 @@ public class WelcomeActivity extends BaseActivity{
 
                     if(info.getSucess().equals("false")){
                         Log.i("welcomeactivity","版本已是最新");
-                        Intent intent = new Intent(WelcomeActivity.this,MainActivity.class);
+//                        Intent intent = new Intent(WelcomeActivity.this,MainActivity.class);
+                        Intent intent = new Intent(WelcomeActivity.this,LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         getApplicationContext().startActivity(intent);
                         finish();

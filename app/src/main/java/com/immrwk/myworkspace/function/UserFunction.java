@@ -18,7 +18,7 @@ import org.json.JSONArray;
  */
 public class UserFunction {
 
-    public static void updateVersion(RequestQueue mRequestQueue, String versionCode, final Handler mHandler){
+    public static void updateVersion(RequestQueue mRequestQueue, String versionCode, final Handler handler){
         final String url = FuwaiAPI.UpdateVersionUrl+versionCode;
 
         JsonArrayRequest rep = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
@@ -27,7 +27,28 @@ public class UserFunction {
                 Message msg = Message.obtain();
                 msg.obj = jsonArray;
                 msg.what = FunctionTag.UPDATE;
-                mHandler.sendMessage(msg);
+                handler.sendMessage(msg);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.i("error!!",volleyError.toString());
+            }
+        });
+        mRequestQueue.add(rep);
+        mRequestQueue.start();
+    }
+
+    public static void login(RequestQueue mRequestQueue,String account,String password,final Handler handler){
+        String loginUrl = FuwaiAPI.LoginUrl+"?userName="+account+"&password="+password;
+
+        JsonArrayRequest rep = new JsonArrayRequest(loginUrl, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                Message msg = Message.obtain();
+                msg.obj = jsonArray;
+                msg.what = FunctionTag.LOGIN;
+                handler.sendMessage(msg);
             }
         }, new Response.ErrorListener() {
             @Override

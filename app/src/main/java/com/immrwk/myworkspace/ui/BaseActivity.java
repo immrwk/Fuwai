@@ -15,16 +15,12 @@ public class BaseActivity extends Activity {
     private long mBackPressed = 0;
 
     @Override
-    public void onBackPressed()
-    {
-        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis())
-        {
-            Log.i("baseactivity","1111111111111");
+    public void onBackPressed() {
+        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
             System.exit(0);
             return;
         } else {
-            Log.i("baseactivity","22222222222");
-            Toast.makeText(BaseActivity.this,"再按一次返回键退出程序",Toast.LENGTH_SHORT).show();
+            Toast.makeText(BaseActivity.this, "再按一次返回键退出程序", Toast.LENGTH_SHORT).show();
         }
 
         mBackPressed = System.currentTimeMillis();

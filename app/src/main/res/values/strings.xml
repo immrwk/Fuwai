@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">MyWorkspace</string>
+    <string name="app_name">阜外APP</string>
+    <string name="hint_name">阜外账号/手机</string>
+    <string name="hint_password">登录密码</string>
+    <string name="hint_ip">服务器IP地址</string>
+    <string name="login_text">登录</string>
 </resources>
