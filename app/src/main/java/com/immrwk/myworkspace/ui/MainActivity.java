@@ -71,7 +71,7 @@ public class MainActivity extends BaseFragmentActivity implements View.OnClickLi
     private void setSelect(int i) {
         resetResources();
         Resources resource = (Resources) getBaseContext().getResources();
-        ColorStateList csl = (ColorStateList) resource.getColorStateList(R.color.ownPurple);
+        ColorStateList csl = (ColorStateList) resource.getColorStateList(R.color.commonPurple);
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         hideFragment(transaction);

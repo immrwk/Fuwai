@@ -4,6 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorBlack">#000000</color>
-    <color name="ownPurple">#6B0334</color>
+    <color name="commonPurple">#6B0334</color>
 
 </resources>
