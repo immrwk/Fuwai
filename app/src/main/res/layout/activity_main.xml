@@ -6,10 +6,18 @@
     android:orientation="vertical">
 
 
-    <ImageView
+    <!--    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_20dp"
+            android:src="@drawable/fuwai_text" />-->
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_20dp"
-        android:src="@drawable/fuwai_text" />
+        android:layout_height="wrap_content"
+        android:background="@color/commonPurple"
+        android:text="阜外医院视频客户端"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp" />
 
     <FrameLayout
         android:id="@+id/fl_content"
