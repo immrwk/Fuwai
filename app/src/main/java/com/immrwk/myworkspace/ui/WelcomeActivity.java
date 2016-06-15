@@ -54,15 +54,14 @@ public class WelcomeActivity extends BaseActivity{
                         obj = jarr.getJSONObject(0);
                         info.setSucess(obj.getString("success"));
                         info.setMsg(obj.getString("msg"));
-                        info.setUserId(obj.getString("userId"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                     if(info.getSucess().equals("false")){
                         Log.i("welcomeactivity","版本已是最新");
-                        Intent intent = new Intent(WelcomeActivity.this,MainActivity.class);
-//                        Intent intent = new Intent(WelcomeActivity.this,LoginActivity.class);
+//                        Intent intent = new Intent(WelcomeActivity.this,MainActivity.class);
+                        Intent intent = new Intent(WelcomeActivity.this,LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         getApplicationContext().startActivity(intent);
                         finish();

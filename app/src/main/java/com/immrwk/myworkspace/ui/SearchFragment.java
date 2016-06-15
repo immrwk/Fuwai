@@ -1,20 +1,35 @@
 package com.immrwk.myworkspace.ui;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.immrwk.myworkspace.R;
+import com.immrwk.myworkspace.UserInfo;
+import com.immrwk.myworkspace.api.FunctionTag;
+import com.immrwk.myworkspace.function.UserFunction;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Administrator on 2016/5/27 0027.
  */
 public class SearchFragment extends Fragment {
+
+    private RequestQueue mRequestQueue;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,7 +45,13 @@ public class SearchFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setSearchBtnSize();
+    }
+
+    private void getSearchSort() {
+        if (mRequestQueue == null) {
+            mRequestQueue = Volley.newRequestQueue(getActivity());
+        }
+        UserFunction.getSearchSort(mRequestQueue, UserInfo.userId, mHandler);
     }
 
     private void setSearchBtnSize() {
@@ -43,11 +64,44 @@ public class SearchFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        setSearchBtnSize();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        getSearchSort();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mRequestQueue != null) {
+            mRequestQueue.stop();
+        }
+    }
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case FunctionTag.SEARCHSORT:
+                    JSONArray jarr = (JSONArray) msg.obj;
+                    JSONObject obj;
+
+                    try {
+                        obj = jarr.getJSONObject(0);
+                        String sortArr = obj.getString("title");
+                        Log.i("@@@@@", obj.toString());
+                        Log.i("@@@@@", sortArr);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case FunctionTag.ERROR:
+                    break;
+            }
+        }
+    };
 }
