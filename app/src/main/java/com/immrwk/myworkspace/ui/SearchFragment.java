@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -31,9 +33,19 @@ public class SearchFragment extends Fragment {
 
     private RequestQueue mRequestQueue;
 
+    private TextView tv_hotsort_first;
+    private TextView tv_hotsort_second;
+    private TextView tv_hotsort_third;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    private void bindViews() {
+        tv_hotsort_first = (TextView) getView().findViewById(R.id.tv_hotsort_first);
+        tv_hotsort_second = (TextView) getView().findViewById(R.id.tv_hotsort_second);
+        tv_hotsort_third = (TextView) getView().findViewById(R.id.tv_hotsort_third);
     }
 
     @Override
@@ -45,6 +57,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        bindViews();
     }
 
     private void getSearchSort() {
@@ -88,13 +101,17 @@ public class SearchFragment extends Fragment {
             switch (msg.what) {
                 case FunctionTag.SEARCHSORT:
                     JSONArray jarr = (JSONArray) msg.obj;
-                    JSONObject obj;
 
                     try {
-                        obj = jarr.getJSONObject(0);
-                        String sortArr = obj.getString("title");
-                        Log.i("@@@@@", obj.toString());
-                        Log.i("@@@@@", sortArr);
+                        JSONObject obj = jarr.getJSONObject(0);
+                        JSONArray jarr2 = obj.getJSONArray("title");
+                        if (jarr2.length() != 3) {
+                            Toast.makeText(getActivity(), "获取搜索排行出错", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        tv_hotsort_first.setText(jarr2.get(0).toString());
+                        tv_hotsort_second.setText(jarr2.get(1).toString());
+                        tv_hotsort_third.setText(jarr2.get(2).toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

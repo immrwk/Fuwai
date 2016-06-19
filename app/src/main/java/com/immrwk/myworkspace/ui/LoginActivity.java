@@ -121,7 +121,6 @@ public class LoginActivity extends Activity {
                     try {
                         obj = jarr.getJSONObject(0);
                         UserInfo.userId = (obj.getString("userId"));
-                        Log.i("wang",obj.toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

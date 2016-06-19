@@ -6,4 +6,6 @@
     <color name="colorBlack">#000000</color>
     <color name="commonPurple">#6B0334</color>
     <color name="colorGray">#F0F0F0</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="color_item_click">#E5E5E5</color>
 </resources>
