@@ -54,13 +54,11 @@ public class WelcomeActivity extends BaseActivity{
                         obj = jarr.getJSONObject(0);
                         info.setSucess(obj.getString("success"));
                         info.setMsg(obj.getString("msg"));
-                        info.setUserId(obj.getString("userId"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                     if(info.getSucess().equals("false")){
-                        Log.i("welcomeactivity","版本已是最新");
                         Intent intent = new Intent(WelcomeActivity.this,MainActivity.class);
 //                        Intent intent = new Intent(WelcomeActivity.this,LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -69,19 +67,6 @@ public class WelcomeActivity extends BaseActivity{
                     }else if(info.getSucess().equals("true")){
                         Log.i("welcomeactivity","有新版本可用");
                     }
-
-//                    for(int i = 0; i < jarr.length();i++){
-//
-//                        try {
-//                            JSONObject result = jarr.getJSONObject(i);
-//                            UpdateInfo info = new UpdateInfo();
-//                            info.setmMsg(result.getString("msg"));
-//                            info.setmSucess(result.getString("success"));
-//                            Log.i("kkkk",info.toString());
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
 
                     break;
             }

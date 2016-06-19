@@ -7,4 +7,6 @@ public class FunctionTag {
     public static final int ERROR = 1000;
     public static final int UPDATE = 1001;
     public static final int LOGIN = 1002;
+    public static final int SEARCHSORT = 1003;
+    public static final int VIDEOCLASSIFY = 1004;
 }

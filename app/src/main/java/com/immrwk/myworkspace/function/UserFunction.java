@@ -18,8 +18,8 @@ import org.json.JSONArray;
  */
 public class UserFunction {
 
-    public static void updateVersion(RequestQueue mRequestQueue, String versionCode, final Handler handler){
-        final String url = FuwaiAPI.UpdateVersionUrl+versionCode;
+    public static void updateVersion(RequestQueue mRequestQueue, String versionCode, final Handler handler) {
+        final String url = FuwaiAPI.UpdateVersionUrl + versionCode;
 
         JsonArrayRequest rep = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
@@ -32,15 +32,15 @@ public class UserFunction {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.i("error!!",volleyError.toString());
+                Log.i("error!!", volleyError.toString());
             }
         });
         mRequestQueue.add(rep);
         mRequestQueue.start();
     }
 
-    public static void login(RequestQueue mRequestQueue,String account,String password,final Handler handler){
-        String loginUrl = FuwaiAPI.LoginUrl+"?userName="+account+"&password="+password;
+    public static void login(RequestQueue mRequestQueue, String account, String password, final Handler handler) {
+        String loginUrl = FuwaiAPI.LoginUrl + "?userName=" + account + "&password=" + password;
 
         JsonArrayRequest rep = new JsonArrayRequest(loginUrl, new Response.Listener<JSONArray>() {
             @Override
@@ -53,7 +53,48 @@ public class UserFunction {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.i("error!!",volleyError.toString());
+                Log.i("error!!", volleyError.toString());
+            }
+        });
+        mRequestQueue.add(rep);
+        mRequestQueue.start();
+    }
+
+    public static void getSearchSort(RequestQueue mRequestQueue, String userId, final Handler handler) {
+        String searchSortUrl = FuwaiAPI.SearchSortUrl + "?userId=" + userId;
+
+        JsonArrayRequest rep = new JsonArrayRequest(searchSortUrl, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                Message msg = Message.obtain();
+                msg.obj = jsonArray;
+                msg.what = FunctionTag.SEARCHSORT;
+                handler.sendMessage(msg);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.i("error!!", volleyError.toString());
+            }
+        });
+        mRequestQueue.add(rep);
+        mRequestQueue.start();
+    }
+
+    public static void getVideoClassify(RequestQueue mRequestQueue, final Handler handler) {
+        String videoClassifyUrl = FuwaiAPI.VideoClassify;
+        JsonArrayRequest rep = new JsonArrayRequest(videoClassifyUrl, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                Message msg = Message.obtain();
+                msg.obj = jsonArray;
+                msg.what = FunctionTag.VIDEOCLASSIFY;
+                handler.sendMessage(msg);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.i("error!!", volleyError.toString());
             }
         });
         mRequestQueue.add(rep);

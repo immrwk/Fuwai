@@ -4,6 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorBlack">#000000</color>
-    <color name="ownPurple">#6B0334</color>
+    <color name="commonPurple">#6B0334</color>
+    <color name="colorGray">#F0F0F0</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="color_item_click">#E5E5E5</color>
 
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="alertdialog_line">#c6c6c6</color>
 </resources>

@@ -1,14 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="#ffffff"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <RelativeLayout
+        android:id="@+id/rl_clean_cache"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="33"
-        android:textSize="30sp"
-        android:textColor="@color/colorBlack"/>
+        android:layout_marginTop="@dimen/dimen_30dp"
+        android:background="@drawable/selector_setting_item"
+        android:gravity="center"
+        android:padding="@dimen/dimen_10dp">
+
+        <ImageView
+            android:id="@+id/icon_cache"
+            android:layout_width="@dimen/dimen_20dp"
+            android:layout_height="@dimen/dimen_20dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/setting_clear_cache" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_25dp"
+            android:layout_marginLeft="@dimen/dimen_10dp"
+            android:layout_toRightOf="@id/icon_cache"
+            android:text="清除缓存"
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen_25dp"
+            android:layout_height="@dimen/dimen_25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrowright" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_check_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_1dp"
+        android:background="@drawable/selector_setting_item"
+        android:gravity="center"
+        android:padding="@dimen/dimen_10dp">
+
+        <ImageView
+            android:id="@+id/icon_check_update"
+            android:layout_width="@dimen/dimen_20dp"
+            android:layout_height="@dimen/dimen_20dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/setting_update" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_25dp"
+            android:layout_marginLeft="@dimen/dimen_10dp"
+            android:layout_toRightOf="@id/icon_check_update"
+            android:text="检查更新"
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen_25dp"
+            android:layout_height="@dimen/dimen_25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrowright" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_aboutus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_30dp"
+        android:background="@drawable/selector_setting_item"
+        android:gravity="center"
+        android:padding="@dimen/dimen_10dp">
+
+        <ImageView
+            android:id="@+id/icon_aboutus"
+            android:layout_width="@dimen/dimen_20dp"
+            android:layout_height="@dimen/dimen_20dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/aboutus" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_25dp"
+            android:layout_marginLeft="@dimen/dimen_10dp"
+            android:layout_toRightOf="@id/icon_aboutus"
+            android:text="关于我们"
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen_25dp"
+            android:layout_height="@dimen/dimen_25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrowright" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_special_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_1dp"
+        android:background="@drawable/selector_setting_item"
+        android:gravity="center"
+        android:padding="@dimen/dimen_10dp">
+
+        <ImageView
+            android:id="@+id/icon_special_note"
+            android:layout_width="@dimen/dimen_20dp"
+            android:layout_height="@dimen/dimen_20dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/special_note" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_25dp"
+            android:layout_marginLeft="@dimen/dimen_10dp"
+            android:layout_toRightOf="@id/icon_special_note"
+            android:text="特别说明"
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen_25dp"
+            android:layout_height="@dimen/dimen_25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrowright" />
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_10dp"
+        android:layout_marginRight="@dimen/dimen_10dp"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:background="@drawable/selector_btn_login"
+        android:paddingBottom="@dimen/dimen_5dp"
+        android:paddingTop="@dimen/dimen_5dp"
+        android:text="退出登录"
+        android:textSize="20sp" />
 </LinearLayout>
