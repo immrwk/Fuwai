@@ -15,7 +15,7 @@ public class SpecialNoteActivity extends Activity {
 
     private WebView wv;
     private ImageView iv_return;
-    String content = "本APP阜外医院视频客户端<br>非官方！！！<br>非官方！！！";
+    String content = "本APP为阜外医院视频客户端<br>非官方！！！<br>非官方！！！";
 
 
     @Override
