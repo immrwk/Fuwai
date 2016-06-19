@@ -100,4 +100,53 @@ public class UserFunction {
         mRequestQueue.add(rep);
         mRequestQueue.start();
     }
+
+    public static void getSearchResult(RequestQueue mRequestQueue, String title, final Handler handler) {
+        String searchUrl = FuwaiAPI.SearchUrl + "?title=" + title;
+        JsonArrayRequest rep = new JsonArrayRequest(searchUrl, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                Message msg = Message.obtain();
+                msg.obj = jsonArray;
+                msg.what = FunctionTag.SEARCHRESULT;
+                handler.sendMessage(msg);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.i("error!!", volleyError.toString());
+            }
+        });
+        mRequestQueue.add(rep);
+        mRequestQueue.start();
+    }
+
+    /**
+     * 获取点播你内容
+     *
+     * @param mRequestQueue
+     * @param classifyId
+     * @param pageNow
+     * @param userId
+     * @param handler
+     */
+    public static void getDemandVideo(RequestQueue mRequestQueue, String classifyId, String pageNow, String userId, final Handler handler) {
+        String demandVideoUrl = FuwaiAPI.DemandVideoUrl + "?classifyId=" + classifyId + "&pageNow=" + pageNow + "&userId=" + userId;
+        JsonArrayRequest rep = new JsonArrayRequest(demandVideoUrl, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                Message msg = Message.obtain();
+                msg.obj = jsonArray;
+                msg.what = FunctionTag.DEMANDVIDEO;
+                handler.sendMessage(msg);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.i("error!!", volleyError.toString());
+            }
+        });
+        mRequestQueue.add(rep);
+        mRequestQueue.start();
+    }
 }

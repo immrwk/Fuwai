@@ -6,17 +6,20 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.immrwk.myworkspace.AppConfig;
 import com.immrwk.myworkspace.R;
-import com.immrwk.myworkspace.UserInfo;
+import com.immrwk.myworkspace.bean.User;
 import com.immrwk.myworkspace.api.FunctionTag;
 import com.immrwk.myworkspace.function.UserFunction;
 
@@ -34,6 +37,9 @@ public class SearchFragment extends Fragment {
     private TextView tv_hotsort_first;
     private TextView tv_hotsort_second;
     private TextView tv_hotsort_third;
+    private EditText edt_search_input;
+
+    private Button btn_search;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +50,8 @@ public class SearchFragment extends Fragment {
         tv_hotsort_first = (TextView) getView().findViewById(R.id.tv_hotsort_first);
         tv_hotsort_second = (TextView) getView().findViewById(R.id.tv_hotsort_second);
         tv_hotsort_third = (TextView) getView().findViewById(R.id.tv_hotsort_third);
+        btn_search = (Button) getView().findViewById(R.id.btn_search);
+        edt_search_input = (EditText) getView().findViewById(R.id.edt_search_input);
     }
 
     @Override
@@ -56,13 +64,32 @@ public class SearchFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         bindViews();
+        bindEvents();
+    }
+
+    private void bindEvents() {
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String content = edt_search_input.getText().toString();
+                if (content != null && !content.equals("")) {
+                    Log.i("@@@", "content=" + content);
+                    if (mRequestQueue == null) {
+                        mRequestQueue = Volley.newRequestQueue(getActivity());
+                    }
+                    UserFunction.getSearchResult(mRequestQueue, content, mHandler);
+                }
+            }
+        });
     }
 
     private void getSearchSort() {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(getActivity());
         }
-        UserFunction.getSearchSort(mRequestQueue, UserInfo.userId, mHandler);
+        if (AppConfig.user != null) {
+            UserFunction.getSearchSort(mRequestQueue, AppConfig.user.userId, mHandler);
+        }
     }
 
     private void setSearchBtnSize() {
@@ -113,6 +140,20 @@ public class SearchFragment extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    break;
+                case FunctionTag.SEARCHRESULT:
+                    JSONArray searchResult = (JSONArray) msg.obj;
+
+                    try {
+                        for (int i = 0; i < searchResult.length(); i++) {
+
+                            JSONObject objResult = searchResult.getJSONObject(i);
+                            Log.i("@@@", objResult.toString());
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                     break;
                 case FunctionTag.ERROR:
                     break;

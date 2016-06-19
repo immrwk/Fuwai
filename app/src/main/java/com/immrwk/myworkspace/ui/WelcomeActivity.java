@@ -59,8 +59,8 @@ public class WelcomeActivity extends BaseActivity{
                     }
 
                     if(info.getSucess().equals("false")){
-                        Intent intent = new Intent(WelcomeActivity.this,MainActivity.class);
-//                        Intent intent = new Intent(WelcomeActivity.this,LoginActivity.class);
+//                        Intent intent = new Intent(WelcomeActivity.this,MainActivity.class);
+                        Intent intent = new Intent(WelcomeActivity.this,LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         getApplicationContext().startActivity(intent);
                         finish();
