@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.immrwk.myworkspace.R;
 import com.immrwk.myworkspace.bean.VideoClassifyModel;
 
@@ -76,10 +77,15 @@ public class VideoClassifyAdapter extends BaseAdapter {
 //        new Task(holder.ivVideoPic, model.getImgurl()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,"");
 
         //volley框架imageloader加载图片，加载太慢！！！
-        ImageLoader.ImageListener listener = ImageLoader.getImageListener(holder.ivVideoPic, R.drawable.search_normal, R.drawable.search_selected);
-        RequestQueue mQueue = Volley.newRequestQueue(context);
-        ImageLoader mImageLoader = new ImageLoader(mQueue, new BitmapCache());
-        mImageLoader.get(model.getImgurl(), listener);
+//        ImageLoader.ImageListener listener = ImageLoader.getImageListener(holder.ivVideoPic, R.drawable.search_normal, R.drawable.search_selected);
+//        RequestQueue mQueue = Volley.newRequestQueue(context);
+//        ImageLoader mImageLoader = new ImageLoader(mQueue, new BitmapCache());
+//        mImageLoader.get(model.getImgurl(), listener);
+
+        Glide.with(context)
+                .load(model.getImgurl())
+                .into(holder.ivVideoPic);
+
         return convertView;
     }
 
