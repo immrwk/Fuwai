@@ -65,7 +65,6 @@ public class ClassifyFragment extends Fragment {
         super.onStop();
         if (mRequestQueue != null) {
             mRequestQueue.stop();
-            ;
         }
     }
 
