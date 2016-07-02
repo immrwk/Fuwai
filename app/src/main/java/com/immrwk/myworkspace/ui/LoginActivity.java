@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,10 +13,10 @@ import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.immrwk.myworkspace.AppConfig;
 import com.immrwk.myworkspace.R;
-import com.immrwk.myworkspace.UserInfo;
+import com.immrwk.myworkspace.bean.User;
 import com.immrwk.myworkspace.api.FunctionTag;
-import com.immrwk.myworkspace.bean.UpdateInfo;
 import com.immrwk.myworkspace.function.UserFunction;
 import com.immrwk.myworkspace.util.MD5Util;
 
@@ -120,7 +119,8 @@ public class LoginActivity extends Activity {
                     JSONObject obj;
                     try {
                         obj = jarr.getJSONObject(0);
-                        UserInfo.userId = (obj.getString("userId"));
+                        AppConfig.user = new User();
+                        AppConfig.user.userId = (obj.getString("userId"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

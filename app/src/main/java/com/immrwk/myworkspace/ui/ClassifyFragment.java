@@ -60,6 +60,15 @@ public class ClassifyFragment extends Fragment {
         UserFunction.getVideoClassify(mRequestQueue, mHandler);
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mRequestQueue != null) {
+            mRequestQueue.stop();
+            ;
+        }
+    }
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
