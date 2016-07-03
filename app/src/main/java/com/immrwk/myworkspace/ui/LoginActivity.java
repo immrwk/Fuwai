@@ -16,7 +16,7 @@ import com.android.volley.toolbox.Volley;
 import com.immrwk.myworkspace.AppConfig;
 import com.immrwk.myworkspace.R;
 import com.immrwk.myworkspace.bean.User;
-import com.immrwk.myworkspace.api.FunctionTag;
+import com.immrwk.myworkspace.function.FunctionTag;
 import com.immrwk.myworkspace.function.UserFunction;
 import com.immrwk.myworkspace.util.MD5Util;
 

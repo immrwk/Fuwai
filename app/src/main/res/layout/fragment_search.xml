@@ -22,7 +22,8 @@
             android:drawablePadding="@dimen/dimen_10dp"
             android:gravity="center_vertical"
             android:hint="请输入搜索内容"
-            android:paddingLeft="5dp" />
+            android:paddingLeft="5dp"
+            android:singleLine="true" />
 
         <Button
             android:id="@+id/btn_search"

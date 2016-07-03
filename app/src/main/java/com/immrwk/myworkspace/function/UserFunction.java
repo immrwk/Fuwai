@@ -8,7 +8,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.immrwk.myworkspace.api.FunctionTag;
 import com.immrwk.myworkspace.api.FuwaiAPI;
 
 import org.json.JSONArray;
@@ -130,8 +129,9 @@ public class UserFunction {
      * @param userId
      * @param handler
      */
-    public static void getDemandVideo(RequestQueue mRequestQueue, String classifyId, String pageNow, String userId, final Handler handler) {
+    public static void getDemandVideo(RequestQueue mRequestQueue, int classifyId, int pageNow, String userId, final Handler handler) {
         String demandVideoUrl = FuwaiAPI.DemandVideoUrl + "?classifyId=" + classifyId + "&pageNow=" + pageNow + "&userId=" + userId;
+        Log.e("wang",demandVideoUrl);
         JsonArrayRequest rep = new JsonArrayRequest(demandVideoUrl, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {

@@ -27,6 +27,8 @@ public class VideoAdapter extends BaseAdapter {
     public VideoAdapter(Context context, List<VideoModel> videos) {
         this.context = context;
         this.videos = videos;
+        mInflater = LayoutInflater.from(context);
+
     }
 
     @Override
@@ -59,6 +61,12 @@ public class VideoAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
+        int screenWidth = getScreenWidth(context);
+        ViewGroup.LayoutParams lp = holder.videoPic.getLayoutParams();
+        lp.width = screenWidth;
+        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        holder.videoPic.setLayoutParams(lp);
 
         VideoModel vm = videos.get(position);
         holder.tvVideoType.setText("类别:" + vm.getVideoType());
