@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,7 +98,7 @@ public class HomeFragment extends Fragment {
                         for (int i = 0; i < jarr.length(); i++) {
                             obj = jarr.getJSONObject(i);
                             VideoModel vm = new VideoModel();
-                            vm.setVideoName(obj.getString("className"));
+                            vm.setVideoName(obj.getString("videoName"));
                             vm.setVideoId(obj.getString("videoId"));
                             vm.setClassName(obj.getString("className"));
                             vm.setVideoType(obj.getString("videoType"));
@@ -108,6 +109,7 @@ public class HomeFragment extends Fragment {
                             vm.setCreateDate(obj.getString("createDate"));
 
                             videos.add(vm);
+                            Log.i("wang",vm.toString());
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

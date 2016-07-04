@@ -11,25 +11,22 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.immrwk.myworkspace.R;
 import com.immrwk.myworkspace.bean.VideoModel;
-import com.immrwk.myworkspace.util.Tools;
 
 import java.util.List;
 
-
 /**
- * Created by Administrator on 2016/7/2 0002.
+ * Created by Administrator on 2016/7/4 0004.
  */
-public class VideoAdapter extends BaseAdapter {
+public class VideoListAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
     private List<VideoModel> videos;
     private Context context;
 
-    public VideoAdapter(Context context, List<VideoModel> videos) {
+    public VideoListAdapter(Context context, List<VideoModel> videosd) {
         this.context = context;
         this.videos = videos;
         mInflater = LayoutInflater.from(context);
-
     }
 
     @Override
@@ -51,11 +48,10 @@ public class VideoAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_video, null);
+            convertView = mInflater.inflate(R.layout.item_videolist, null);
             holder = new ViewHolder();
             holder.videoPic = (ImageView) convertView.findViewById(R.id.iv_videopic);
             holder.tvVideoName = (TextView) convertView.findViewById(R.id.tv_videoname);
-            holder.tvVideoCreateTime = (TextView) convertView.findViewById(R.id.tv_videoCreateTime);
             holder.tvVideoType = (TextView) convertView.findViewById(R.id.tv_videoType);
             holder.tvVideoHits = (TextView) convertView.findViewById(R.id.tv_videoHits);
             convertView.setTag(holder);
@@ -63,23 +59,15 @@ public class VideoAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        int screenWidth = Tools.getScreenWidth(context);
-        ViewGroup.LayoutParams lp = holder.videoPic.getLayoutParams();
-        lp.width = screenWidth/2 - Tools.dip2px(context,20);
-        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        holder.videoPic.setLayoutParams(lp);
-
         VideoModel vm = videos.get(position);
-        holder.tvVideoType.setText("类别:" + vm.getClassName());
+        holder.tvVideoType.setText(vm.getClassName());
         holder.tvVideoName.setText(vm.getVideoName());
-        holder.tvVideoCreateTime.setText(vm.getCreateDate());
         holder.tvVideoHits.setText(vm.getClick());
 
         Glide.with(context)
                 .load(vm.getImgurl())
                 .into(holder.videoPic);
-
-        return convertView;
+        return null;
     }
 
     public static class ViewHolder {
