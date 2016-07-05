@@ -5,6 +5,9 @@ import android.content.res.Resources;
 import android.util.TypedValue;
 import android.view.WindowManager;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Created by Administrator on 2016/7/3 0003.
  */
@@ -57,4 +60,14 @@ public class Tools {
         return TypedValue.applyDimension(unit, size, r.getDisplayMetrics());
     }
 
+    public static String ch2utf8(String content) {
+        try {
+            String str = new String(content.getBytes("UTF-8"));
+            String utf8str = URLEncoder.encode(str, "UTF-8");
+            return utf8str;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

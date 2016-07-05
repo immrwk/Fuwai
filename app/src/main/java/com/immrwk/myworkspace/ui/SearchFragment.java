@@ -21,6 +21,7 @@ import com.immrwk.myworkspace.AppConfig;
 import com.immrwk.myworkspace.R;
 import com.immrwk.myworkspace.function.FunctionTag;
 import com.immrwk.myworkspace.function.UserFunction;
+import com.immrwk.myworkspace.util.Tools;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +40,7 @@ public class SearchFragment extends Fragment {
     private EditText edt_search_input;
 
     private Button btn_search;
+    private int pageNow = 1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,13 +72,39 @@ public class SearchFragment extends Fragment {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String content = edt_search_input.getText().toString();
+                String content = Tools.ch2utf8(edt_search_input.getText().toString());
                 if (content != null && !content.equals("")) {
-                    Log.i("@@@", "content=" + content);
                     if (mRequestQueue == null) {
                         mRequestQueue = Volley.newRequestQueue(getActivity());
                     }
-                    UserFunction.getSearchResult(mRequestQueue, content, mHandler);
+                    UserFunction.getSearchResult(mRequestQueue, AppConfig.user.userId, pageNow, content, mHandler);
+                }
+            }
+        });
+        tv_hotsort_first.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String content = Tools.ch2utf8(tv_hotsort_first.getText().toString());
+                if (content != null && !content.equals("")) {
+                    UserFunction.getSearchResult(mRequestQueue, AppConfig.user.userId, pageNow, content, mHandler);
+                }
+            }
+        });
+        tv_hotsort_second.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String content = Tools.ch2utf8(tv_hotsort_second.getText().toString());
+                if (content != null && !content.equals("")) {
+                    UserFunction.getSearchResult(mRequestQueue, AppConfig.user.userId, pageNow, content, mHandler);
+                }
+            }
+        });
+        tv_hotsort_third.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String content = Tools.ch2utf8(tv_hotsort_third.getText().toString());
+                if (content != null && !content.equals("")) {
+                    UserFunction.getSearchResult(mRequestQueue, AppConfig.user.userId, pageNow, content, mHandler);
                 }
             }
         });

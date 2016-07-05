@@ -67,7 +67,7 @@ public class VideoListAdapter extends BaseAdapter {
         Glide.with(context)
                 .load(vm.getImgurl())
                 .into(holder.videoPic);
-        return null;
+        return convertView;
     }
 
     public static class ViewHolder {
