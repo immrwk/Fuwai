@@ -16,6 +16,11 @@ import com.immrwk.myworkspace.R;
  */
 public class LoadListView extends ListView {
 
+    public static final int NOMORE_DATA = 0;
+    public static final int LOADMORE_SUCCESS = 1;
+    public static final int LOADMORE_FAILED = -1;
+
+
     /* 加载更多控件 */
     private View moreView;
     private TextView tv_load_more;
@@ -59,7 +64,7 @@ public class LoadListView extends ListView {
      * 重置ListView拉下刷新
      */
     public void onResetListPage() {
-        if (getAdapter().getCount() < 10) {
+        if (getAdapter().getCount() < 1) {
             tv_load_more.setText(getResources().getString(R.string.no_more));
             pb_load_progress.setVisibility(View.GONE);
         } else {
@@ -72,30 +77,50 @@ public class LoadListView extends ListView {
 
     /**
      * 下拉刷新加载完成
+     *
      * @param iOver 返回加载状态（0：最后一页，没有更多数据。1：下拉刷新成功。-1：下拉刷新失败）
      */
-    public void onLoadEnd(int iOver) {
-        if (iOver == 0) {
+    public void onLoadFinish(int iOver) {
+        if (iOver == NOMORE_DATA) {
             tv_load_more.setText(getResources().getString(R.string.no_more));
             pb_load_progress.setVisibility(View.GONE);
-        } else if (iOver == 1) {
+        } else if (iOver == LOADMORE_SUCCESS) {
             blLoad = false;
-        } else if (iOver == -1) {
+        } else if (iOver == LOADMORE_FAILED) {
             page--;
             blLoad = false;
         }
     }
 
     public DataListener mDataListener;
+
     /**
      * 设置线程接口
+     *
      * @param listener 线程接口
      */
     public void setDataListener(DataListener listener) {
         LayoutInflater inflater = LayoutInflater.from(context.getApplicationContext());
 
         moreView = inflater.inflate(R.layout.footer_more, null);
-
+        /**
+         * 设置点击加载
+         */
+        moreView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (tv_load_more == null) {
+                    return;
+                }
+                if (tv_load_more.getText().toString().equals(getResources().getString(R.string.no_more))) {
+                    tv_load_more.setText(getResources().getString(R.string.more_loading));
+                    if (pb_load_progress != null) {
+                        pb_load_progress.setVisibility(View.VISIBLE);
+                    }
+                    mDataListener.onloadMoreData(page);
+                }
+            }
+        });
         tv_load_more = (TextView) moreView.findViewById(R.id.tv_load_more);
         pb_load_progress = (ProgressBar) moreView.findViewById(R.id.pb_load_progress);
         tv_load_more.setText(getResources().getString(R.string.no_more));
@@ -107,14 +132,16 @@ public class LoadListView extends ListView {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 int maxItem = 0;
-                if (getAdapter().getCount() < 10)
+                if (getAdapter().getCount() < 1) {
                     return;
-                else {
-                    tv_load_more.setText(getResources().getString(R.string.more_loading));
-                    pb_load_progress.setVisibility(View.VISIBLE);
                 }
-                if (blLoad)
+//                else {
+//                    tv_load_more.setText(getResources().getString(R.string.more_loading));
+//                    pb_load_progress.setVisibility(View.VISIBLE);
+//                }
+                if (blLoad) {
                     return;
+                }
                 maxItem = getAdapter().getCount() - 1;
                 if (lastItem == maxItem && (scrollState == OnScrollListener.SCROLL_STATE_IDLE || scrollState == OnScrollListener.SCROLL_STATE_FLING)) {
                     blLoad = true;
@@ -124,6 +151,7 @@ public class LoadListView extends ListView {
                     pb_load_progress.setVisibility(View.VISIBLE);
                     mDataListener.onloadMoreData(page);
                 }
+
             }
 
             @Override
@@ -140,8 +168,6 @@ public class LoadListView extends ListView {
     public interface DataListener {
         /**
          * 线程数据处理完成返回函数
-         * @param tag 线程数据标识
-         * @param objects 返回数据
          */
         void onloadMoreData(int page);
     }
