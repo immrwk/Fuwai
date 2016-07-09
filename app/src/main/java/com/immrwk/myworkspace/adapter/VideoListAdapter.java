@@ -1,6 +1,7 @@
 package com.immrwk.myworkspace.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ public class VideoListAdapter extends BaseAdapter {
     private List<VideoModel> videos;
     private Context context;
 
-    public VideoListAdapter(Context context, List<VideoModel> videosd) {
+    public VideoListAdapter(Context context, List<VideoModel> videos) {
         this.context = context;
         this.videos = videos;
         mInflater = LayoutInflater.from(context);
@@ -63,11 +64,20 @@ public class VideoListAdapter extends BaseAdapter {
         holder.tvVideoType.setText(vm.getClassName());
         holder.tvVideoName.setText(vm.getVideoName());
         holder.tvVideoHits.setText(vm.getClick());
-
+        setSmallImgSize(holder);
         Glide.with(context)
                 .load(vm.getImgurl())
                 .into(holder.videoPic);
         return convertView;
+    }
+
+    private void setSmallImgSize(ViewHolder holder) {
+        Drawable dr_click = context.getResources().getDrawable(R.drawable.click);
+        Drawable dr_video_class = context.getResources().getDrawable(R.drawable.video_class);
+        dr_click.setBounds(0, 0, 50, 50);
+        dr_video_class.setBounds(0, 0, 50, 50);
+        holder.tvVideoHits.setCompoundDrawables(dr_click, null, null, null);//只放左边
+        holder.tvVideoType.setCompoundDrawables(dr_video_class, null, null, null);//只放左边
     }
 
     public static class ViewHolder {

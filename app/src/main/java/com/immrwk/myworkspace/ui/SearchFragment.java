@@ -1,5 +1,6 @@
 package com.immrwk.myworkspace.ui;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,6 +42,10 @@ public class SearchFragment extends Fragment {
 
     private Button btn_search;
     private int pageNow = 1;
+    /**
+     * 搜索内容
+     */
+    private String content;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,42 +77,48 @@ public class SearchFragment extends Fragment {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String content = Tools.ch2utf8(edt_search_input.getText().toString());
-                if (content != null && !content.equals("")) {
-                    if (mRequestQueue == null) {
-                        mRequestQueue = Volley.newRequestQueue(getActivity());
-                    }
-                    UserFunction.getSearchResult(mRequestQueue, AppConfig.user.userId, pageNow, content, mHandler);
-                }
+                content = Tools.ch2utf8(edt_search_input.getText().toString());
+                getData();
             }
         });
         tv_hotsort_first.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String content = Tools.ch2utf8(tv_hotsort_first.getText().toString());
+                content = Tools.ch2utf8(tv_hotsort_first.getText().toString());
                 if (content != null && !content.equals("")) {
-                    UserFunction.getSearchResult(mRequestQueue, AppConfig.user.userId, pageNow, content, mHandler);
+                    getData();
                 }
             }
         });
         tv_hotsort_second.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String content = Tools.ch2utf8(tv_hotsort_second.getText().toString());
+                content = Tools.ch2utf8(tv_hotsort_second.getText().toString());
                 if (content != null && !content.equals("")) {
-                    UserFunction.getSearchResult(mRequestQueue, AppConfig.user.userId, pageNow, content, mHandler);
+                    getData();
                 }
             }
         });
         tv_hotsort_third.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String content = Tools.ch2utf8(tv_hotsort_third.getText().toString());
+                content = Tools.ch2utf8(tv_hotsort_third.getText().toString());
                 if (content != null && !content.equals("")) {
-                    UserFunction.getSearchResult(mRequestQueue, AppConfig.user.userId, pageNow, content, mHandler);
+                    getData();
                 }
             }
         });
+    }
+
+    private void getData() {
+        if (content == null || content.equals("")) {
+            Toast.makeText(getActivity(), "搜索内容不能为空！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Intent intent = new Intent(getActivity(), VideoListActivity.class);
+        intent.putExtra("tag", FunctionTag.FROM_SEARCH);
+        intent.putExtra("content", content);
+        startActivity(intent);
     }
 
     private void getSearchSort() {
@@ -169,17 +180,6 @@ public class SearchFragment extends Fragment {
                     }
                     break;
                 case FunctionTag.SEARCHRESULT:
-                    JSONArray searchResult = (JSONArray) msg.obj;
-
-                    try {
-                        for (int i = 0; i < searchResult.length(); i++) {
-
-                            JSONObject objResult = searchResult.getJSONObject(i);
-                            Log.i("@@@", objResult.toString());
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
 
                     break;
                 case FunctionTag.ERROR:

@@ -84,6 +84,8 @@ public class VideoClassifyAdapter extends BaseAdapter {
 
         Glide.with(context)
                 .load(model.getImgurl())
+                .placeholder(R.drawable.search_normal)
+                .error(R.drawable.search_normal)
                 .into(holder.ivVideoPic);
 
         return convertView;

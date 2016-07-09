@@ -11,4 +11,9 @@ public class FunctionTag {
     public static final int VIDEOCLASSIFY = 1004;
     public static final int SEARCHRESULT = 1005;
     public static final int DEMANDVIDEO = 1006;
+
+    public static final int FROM_HOME = 101;
+    public static final int FROM_CLASSIFY = 102;
+    public static final int FROM_SEARCH = 103;
+
 }

@@ -104,7 +104,7 @@ public class UserFunction {
 
     public static void getSearchResult(RequestQueue mRequestQueue, String userId, int pageNow, String title, final Handler handler) {
         String searchUrl = FuwaiAPI.SearchUrl + "?title=" + title + "&userId=" + userId + "&pageNow=" + pageNow;
-        KLog.e(searchUrl);
+        KLog.e("searchUrl="+searchUrl);
         JsonArrayRequest rep = new JsonArrayRequest(searchUrl, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
@@ -112,7 +112,6 @@ public class UserFunction {
                 msg.obj = jsonArray;
                 msg.what = FunctionTag.SEARCHRESULT;
                 handler.sendMessage(msg);
-                KLog.e(msg.what + "!!!!!" + msg.obj.toString());
             }
         }, new Response.ErrorListener() {
             @Override
@@ -135,7 +134,6 @@ public class UserFunction {
      */
     public static void getDemandVideo(RequestQueue mRequestQueue, int classifyId, int pageNow, String userId, final Handler handler) {
         String demandVideoUrl = FuwaiAPI.DemandVideoUrl + "?classifyId=" + classifyId + "&pageNow=" + pageNow + "&userId=" + userId;
-        Log.e("wang", demandVideoUrl);
         JsonArrayRequest rep = new JsonArrayRequest(demandVideoUrl, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {

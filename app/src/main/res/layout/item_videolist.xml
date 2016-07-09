@@ -2,43 +2,60 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+
+    android:orientation="horizontal"
+    android:padding="@dimen/dimen_10dp">
 
     <ImageView
         android:id="@+id/iv_videopic"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/shape_videolist_img"
         android:scaleType="fitXY" />
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="@dimen/dimen_10dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_videoname"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="111111111111111" />
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_videoHits"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:drawableLeft="@drawable/click"
-            android:text="22222222222222"
-            android:textColor="@color/commonPurple" />
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/commonPurple"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/tv_videoType"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:drawableLeft="@drawable/video_class"
-            android:text="3333333333333333"
-            android:textColor="@color/commonPurple" />
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/commonPurple"
+            android:textSize="15sp" />
     </LinearLayout>
 
 </LinearLayout>
