@@ -1,6 +1,7 @@
 package com.immrwk.myworkspace.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.immrwk.myworkspace.R;
 import com.immrwk.myworkspace.bean.VideoModel;
+import com.immrwk.myworkspace.util.KLog;
 import com.immrwk.myworkspace.util.Tools;
 
 import java.util.List;
@@ -63,23 +65,37 @@ public class VideoAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        int screenWidth = Tools.getScreenWidth(context);
-        ViewGroup.LayoutParams lp = holder.videoPic.getLayoutParams();
-        lp.width = screenWidth/2 - Tools.dip2px(context,20);
-        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        holder.videoPic.setLayoutParams(lp);
+//        int screenWidth = Tools.getScreenWidth(context);
+//        ViewGroup.LayoutParams lp = holder.videoPic.getLayoutParams();
+//        lp.width = screenWidth/2 - Tools.dip2px(context,20);
+//        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+//        holder.videoPic.setLayoutParams(lp);
 
         VideoModel vm = videos.get(position);
-        holder.tvVideoType.setText("类别:" + vm.getClassName());
+        if (vm.getClassName() != null) {
+            holder.tvVideoType.setText("类别:" + vm.getClassName());
+        } else {
+            holder.tvVideoType.setText("类别:" + "无");
+        }
+
         holder.tvVideoName.setText(vm.getVideoName());
         holder.tvVideoCreateTime.setText(vm.getCreateDate());
         holder.tvVideoHits.setText(vm.getClick());
-
+        setSmallImgSize(holder);
         Glide.with(context)
                 .load(vm.getImgurl())
                 .into(holder.videoPic);
 
         return convertView;
+    }
+
+    private void setSmallImgSize(ViewHolder holder) {
+        Drawable dr_click = context.getResources().getDrawable(R.drawable.count);
+        Drawable tvVideoCreateTime = context.getResources().getDrawable(R.drawable.update_time);
+        dr_click.setBounds(0, 0, 40, 40);
+        tvVideoCreateTime.setBounds(0, 0, 40, 40);
+        holder.tvVideoHits.setCompoundDrawables(dr_click, null, null, null);//只放左边
+        holder.tvVideoCreateTime.setCompoundDrawables(tvVideoCreateTime, null, null, null);//只放左边
     }
 
     public static class ViewHolder {

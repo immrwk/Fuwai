@@ -1,5 +1,6 @@
 package com.immrwk.myworkspace.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,12 +9,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.immrwk.myworkspace.R;
 import com.immrwk.myworkspace.adapter.VideoClassifyAdapter;
+import com.immrwk.myworkspace.adapter.VideoListAdapter;
 import com.immrwk.myworkspace.function.FunctionTag;
 import com.immrwk.myworkspace.bean.VideoClassifyModel;
 import com.immrwk.myworkspace.function.UserFunction;
@@ -45,6 +48,19 @@ public class ClassifyFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         gv_videoclassify = (GridView) getView().findViewById(R.id.gv_videoclassify);
+        initEvents();
+    }
+
+    private void initEvents() {
+        gv_videoclassify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(getActivity(), VideoListActivity.class);
+                intent.putExtra("tag", FunctionTag.FROM_CLASSIFY);
+                intent.putExtra("classifyid", videos.get(position).getClassifyId());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

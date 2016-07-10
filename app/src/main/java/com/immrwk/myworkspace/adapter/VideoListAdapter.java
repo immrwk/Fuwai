@@ -30,6 +30,10 @@ public class VideoListAdapter extends BaseAdapter {
         mInflater = LayoutInflater.from(context);
     }
 
+    public void setData(List<VideoModel> videos) {
+        this.videos = videos;
+    }
+
     @Override
     public int getCount() {
         return videos.size();
@@ -68,6 +72,7 @@ public class VideoListAdapter extends BaseAdapter {
         Glide.with(context)
                 .load(vm.getImgurl())
                 .into(holder.videoPic);
+
         return convertView;
     }
 

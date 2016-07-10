@@ -2,7 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_10dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_20dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrowleft" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_30dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/fuwai_text" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:src="#F0F0F0" />
 
     <FrameLayout
         android:id="@+id/fl_nodata"
@@ -24,8 +49,9 @@
     <com.immrwk.myworkspace.widget.LoadListView
         android:id="@+id/loadlistview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+
+
         android:background="@color/colorWhite"
         android:cacheColorHint="#00000000"
         android:divider="@drawable/videolist_divider"

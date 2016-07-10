@@ -84,7 +84,7 @@ public class VideoClassifyAdapter extends BaseAdapter {
 
         Glide.with(context)
                 .load(model.getImgurl())
-                .placeholder(R.drawable.search_normal)
+//                .placeholder(R.drawable.search_normal)
                 .error(R.drawable.search_normal)
                 .into(holder.ivVideoPic);
 
@@ -114,8 +114,6 @@ public class VideoClassifyAdapter extends BaseAdapter {
 
             if (result != null) {
                 iv.setImageBitmap(result);
-                Log.i("@@@", url);
-                Log.i("@@@", result.getRowBytes() * result.getHeight() + "");
             }
         }
     }
