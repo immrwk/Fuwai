@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_5dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_20dp"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dimen_5dp"
+            android:paddingRight="@dimen/dimen_5dp"
+            android:src="@drawable/arrowleft" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_30dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/fuwai_text" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:src="#F0F0F0" />
+
+    <FrameLayout
+        android:id="@+id/fl_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorWhite"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="没有找到内容"
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp" />
+    </FrameLayout>
+
+    <com.immrwk.myworkspace.widget.LoadListView
+        android:id="@+id/loadlistview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+
+        android:background="@color/colorWhite"
+        android:cacheColorHint="#00000000"
+        android:divider="@drawable/videolist_divider"
+        android:dividerHeight="@dimen/dimen_1dp"
+        android:listSelector="#00000000"
+        android:scrollbars="none" />
+
+</LinearLayout>

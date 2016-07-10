@@ -8,8 +8,7 @@
         android:id="@+id/iv_videopic"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:src="@drawable/search_normal" />
+        android:layout_gravity="center" />
 
     <TextView
         android:id="@+id/tv_videoname"

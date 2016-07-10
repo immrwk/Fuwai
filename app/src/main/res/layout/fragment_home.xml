@@ -1,12 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.immrwk.myworkspace.widget.CustomScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="00"
-        android:textSize="30sp"
-        android:textColor="@color/colorBlack"/>
-</LinearLayout>
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true">
+
+            <include layout="@layout/banner_main" />
+        </FrameLayout>
+
+        <!--直播内容部分-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_livevideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dimen_5dp"
+                android:paddingTop="@dimen/dimen_5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="@dimen/dimen_5dp"
+                    android:text="直 播 内 容"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_25dp"
+                    android:layout_height="@dimen/dimen_25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_15dp"
+                    android:src="@drawable/arrowright" />
+            </LinearLayout>
+
+            <com.immrwk.myworkspace.widget.TotalGridView
+                android:id="@+id/gv_live"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:horizontalSpacing="10dp"
+                android:numColumns="2"
+                android:scrollbars="none"
+                android:verticalSpacing="10dp" />
+        </LinearLayout>
+
+        <!--点播内容部分-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10dp"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_demandvideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dimen_5dp"
+                android:paddingTop="@dimen/dimen_5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="@dimen/dimen_5dp"
+                    android:text="点 播 内 容"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_25dp"
+                    android:layout_height="@dimen/dimen_25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_15dp"
+                    android:src="@drawable/arrowright" />
+            </LinearLayout>
+
+            <com.immrwk.myworkspace.widget.TotalGridView
+                android:id="@+id/gv_demand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:horizontalSpacing="10dp"
+                android:numColumns="2"
+                android:scrollbars="none"
+                android:verticalSpacing="10dp" />
+        </LinearLayout>
+    </LinearLayout>
+</com.immrwk.myworkspace.widget.CustomScrollView>
+

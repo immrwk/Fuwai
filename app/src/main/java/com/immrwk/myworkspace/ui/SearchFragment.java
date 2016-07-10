@@ -1,5 +1,6 @@
 package com.immrwk.myworkspace.ui;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,9 +20,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.immrwk.myworkspace.AppConfig;
 import com.immrwk.myworkspace.R;
-import com.immrwk.myworkspace.bean.User;
-import com.immrwk.myworkspace.api.FunctionTag;
+import com.immrwk.myworkspace.function.FunctionTag;
 import com.immrwk.myworkspace.function.UserFunction;
+import com.immrwk.myworkspace.util.Tools;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +41,11 @@ public class SearchFragment extends Fragment {
     private EditText edt_search_input;
 
     private Button btn_search;
+    private int pageNow = 1;
+    /**
+     * 搜索内容
+     */
+    private String content;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,16 +77,48 @@ public class SearchFragment extends Fragment {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String content = edt_search_input.getText().toString();
+                content = Tools.ch2utf8(edt_search_input.getText().toString());
+                getData();
+            }
+        });
+        tv_hotsort_first.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                content = Tools.ch2utf8(tv_hotsort_first.getText().toString());
                 if (content != null && !content.equals("")) {
-                    Log.i("@@@", "content=" + content);
-                    if (mRequestQueue == null) {
-                        mRequestQueue = Volley.newRequestQueue(getActivity());
-                    }
-                    UserFunction.getSearchResult(mRequestQueue, content, mHandler);
+                    getData();
                 }
             }
         });
+        tv_hotsort_second.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                content = Tools.ch2utf8(tv_hotsort_second.getText().toString());
+                if (content != null && !content.equals("")) {
+                    getData();
+                }
+            }
+        });
+        tv_hotsort_third.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                content = Tools.ch2utf8(tv_hotsort_third.getText().toString());
+                if (content != null && !content.equals("")) {
+                    getData();
+                }
+            }
+        });
+    }
+
+    private void getData() {
+        if (content == null || content.equals("")) {
+            Toast.makeText(getActivity(), "搜索内容不能为空！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Intent intent = new Intent(getActivity(), VideoListActivity.class);
+        intent.putExtra("tag", FunctionTag.FROM_SEARCH);
+        intent.putExtra("content", content);
+        startActivity(intent);
     }
 
     private void getSearchSort() {
@@ -142,17 +180,6 @@ public class SearchFragment extends Fragment {
                     }
                     break;
                 case FunctionTag.SEARCHRESULT:
-                    JSONArray searchResult = (JSONArray) msg.obj;
-
-                    try {
-                        for (int i = 0; i < searchResult.length(); i++) {
-
-                            JSONObject objResult = searchResult.getJSONObject(i);
-                            Log.i("@@@", objResult.toString());
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
 
                     break;
                 case FunctionTag.ERROR:

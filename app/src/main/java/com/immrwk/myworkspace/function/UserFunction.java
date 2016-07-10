@@ -6,10 +6,11 @@ import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.immrwk.myworkspace.api.FunctionTag;
 import com.immrwk.myworkspace.api.FuwaiAPI;
+import com.immrwk.myworkspace.util.KLog;
 
 import org.json.JSONArray;
 
@@ -101,8 +102,17 @@ public class UserFunction {
         mRequestQueue.start();
     }
 
-    public static void getSearchResult(RequestQueue mRequestQueue, String title, final Handler handler) {
-        String searchUrl = FuwaiAPI.SearchUrl + "?title=" + title;
+    /**
+     * 搜索接口
+     *
+     * @param mRequestQueue
+     * @param userId
+     * @param pageNow
+     * @param title
+     * @param handler
+     */
+    public static void getSearchResult(RequestQueue mRequestQueue, String userId, int pageNow, String title, final Handler handler) {
+        String searchUrl = FuwaiAPI.SearchUrl + "?title=" + title + "&userId=" + userId + "&pageNow=" + pageNow;
         JsonArrayRequest rep = new JsonArrayRequest(searchUrl, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
@@ -130,7 +140,7 @@ public class UserFunction {
      * @param userId
      * @param handler
      */
-    public static void getDemandVideo(RequestQueue mRequestQueue, String classifyId, String pageNow, String userId, final Handler handler) {
+    public static void getDemandVideo(RequestQueue mRequestQueue, String classifyId, int pageNow, String userId, final Handler handler) {
         String demandVideoUrl = FuwaiAPI.DemandVideoUrl + "?classifyId=" + classifyId + "&pageNow=" + pageNow + "&userId=" + userId;
         JsonArrayRequest rep = new JsonArrayRequest(demandVideoUrl, new Response.Listener<JSONArray>() {
             @Override
@@ -138,6 +148,34 @@ public class UserFunction {
                 Message msg = Message.obtain();
                 msg.obj = jsonArray;
                 msg.what = FunctionTag.DEMANDVIDEO;
+                handler.sendMessage(msg);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.i("error!!", volleyError.toString());
+            }
+        });
+        mRequestQueue.add(rep);
+        mRequestQueue.start();
+    }
+
+    /**
+     * 获取直播内容
+     *
+     * @param mRequestQueue
+     * @param pageNow
+     * @param userId
+     * @param handler
+     */
+    public static void getLiveVideo(RequestQueue mRequestQueue, int pageNow, String userId, final Handler handler) {
+        String liveVideoUrl = FuwaiAPI.LiveVideoUrl + "?pageNow=" + pageNow + "&userId=" + userId;
+        JsonArrayRequest rep = new JsonArrayRequest(liveVideoUrl, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                Message msg = Message.obtain();
+                msg.obj = jsonArray;
+                msg.what = FunctionTag.LIVEVIDEO;
                 handler.sendMessage(msg);
             }
         }, new Response.ErrorListener() {

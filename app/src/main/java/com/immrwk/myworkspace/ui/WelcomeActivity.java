@@ -10,7 +10,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.immrwk.myworkspace.AppConfig;
 import com.immrwk.myworkspace.R;
-import com.immrwk.myworkspace.api.FunctionTag;
+import com.immrwk.myworkspace.function.FunctionTag;
 import com.immrwk.myworkspace.bean.UpdateInfo;
 import com.immrwk.myworkspace.function.UserFunction;
 
