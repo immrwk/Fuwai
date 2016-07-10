@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.immrwk.myworkspace.widget.CustomScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true">
+
+            <include layout="@layout/banner_main" />
+        </FrameLayout>
 
         <!--直播内容部分-->
         <LinearLayout
@@ -16,11 +26,12 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_livevideo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/dimen_3dp"
-                android:paddingTop="@dimen/dimen_3dp">
+                android:paddingBottom="@dimen/dimen_5dp"
+                android:paddingTop="@dimen/dimen_5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -59,11 +70,12 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_demandvideo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/dimen_3dp"
-                android:paddingTop="@dimen/dimen_3dp">
+                android:paddingBottom="@dimen/dimen_5dp"
+                android:paddingTop="@dimen/dimen_5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -93,5 +105,5 @@
                 android:verticalSpacing="10dp" />
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
+</com.immrwk.myworkspace.widget.CustomScrollView>
 

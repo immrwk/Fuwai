@@ -65,12 +65,6 @@ public class VideoAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-//        int screenWidth = Tools.getScreenWidth(context);
-//        ViewGroup.LayoutParams lp = holder.videoPic.getLayoutParams();
-//        lp.width = screenWidth/2 - Tools.dip2px(context,20);
-//        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-//        holder.videoPic.setLayoutParams(lp);
-
         VideoModel vm = videos.get(position);
         if (vm.getClassName() != null) {
             holder.tvVideoType.setText("类别:" + vm.getClassName());

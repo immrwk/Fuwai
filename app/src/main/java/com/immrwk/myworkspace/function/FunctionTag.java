@@ -19,7 +19,8 @@ public class FunctionTag {
     /**
      * videolistactivity 判断来源tag
      */
-    public static final int FROM_HOME = 101;
+    public static final int FROM_HOME_LIVE = 100;
+    public static final int FROM_HOME_DEMAND = 101;
     public static final int FROM_CLASSIFY = 102;
     public static final int FROM_SEARCH = 103;
 

@@ -58,7 +58,9 @@ public class VideoListActivity extends Activity {
     /**
      * classifyid  视频分类ID
      */
-    private String classifyid = "";
+    private String classifyId = "";
+
+    private boolean is_first_load = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +82,7 @@ public class VideoListActivity extends Activity {
         loadListView.setDataListener(new LoadListView.DataListener() {
             @Override
             public void onloadMoreData(int page) {
-                UserFunction.getSearchResult(mRequestQueue, AppConfig.user.userId, pageNow, content, mHandler);
+                getData(tag);
             }
         });
         loadListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,29 +94,34 @@ public class VideoListActivity extends Activity {
         });
     }
 
-    private void initData() {
+    private void getData(int tag) {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(VideoListActivity.this);
         }
-//        adapter = new VideoListAdapter(VideoListActivity.this, videos);
-//        loadListView.setAdapter(adapter);
         switch (tag) {
             case FunctionTag.FROM_SEARCH:
                 UserFunction.getSearchResult(mRequestQueue, AppConfig.user.userId, pageNow, content, mHandler);
                 break;
             case FunctionTag.FROM_CLASSIFY:
-                UserFunction.getDemandVideo(mRequestQueue, classifyid, pageNow, AppConfig.user.userId, mHandler);
+            case FunctionTag.FROM_HOME_DEMAND:
+                UserFunction.getDemandVideo(mRequestQueue, classifyId, pageNow, AppConfig.user.userId, mHandler);
+                break;
+            case FunctionTag.FROM_HOME_LIVE:
+                UserFunction.getLiveVideo(mRequestQueue, pageNow, AppConfig.user.userId, mHandler);
                 break;
             default:
                 break;
         }
     }
 
+    private void initData() {
+        getData(tag);
+    }
+
     private void initViews() {
         loadListView = (LoadListView) findViewById(R.id.loadlistview);
         fl_nodata = (FrameLayout) findViewById(R.id.fl_nodata);
         iv_back = (ImageView) findViewById(R.id.iv_back);
-//        loadListView.setFooterDividersEnabled(false);
     }
 
     /**
@@ -128,7 +135,11 @@ public class VideoListActivity extends Activity {
                 content = b.getString("content");
                 break;
             case FunctionTag.FROM_CLASSIFY:
-                classifyid = b.getString("classifyid");
+            case FunctionTag.FROM_HOME_DEMAND:
+                classifyId = b.getString("classifyId");
+                break;
+            case FunctionTag.FROM_HOME_LIVE:
+
                 break;
             default:
                 break;
@@ -141,24 +152,24 @@ public class VideoListActivity extends Activity {
      * @param result
      */
     private void refreshData(JSONArray result) {
-
-
         try {
             if (result.length() == 1) {
-                if (result.getJSONObject(0).getString("success").equals("false")) {
-                    if (pageNow == 1) {
-                        fl_nodata.setVisibility(View.VISIBLE);
-                        loadListView.setVisibility(View.GONE);
-                    } else {
-                        loadListView.onLoadFinish(LoadListView.NOMORE_DATA);
+                if (result.getJSONObject(0).has("success")) {
+                    if (result.getJSONObject(0).getString("success").equals("false")) {
+                        if (pageNow == 1) {
+                            fl_nodata.setVisibility(View.VISIBLE);
+                            loadListView.setVisibility(View.GONE);
+                        } else {
+                            loadListView.onLoadFinish(LoadListView.NOMORE_DATA);
+                        }
+                        return;
                     }
-                    return;
                 }
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         try {
             for (int i = 0; i < result.length(); i++) {
@@ -166,13 +177,15 @@ public class VideoListActivity extends Activity {
                 VideoModel vm = new VideoModel();
                 vm.setVideoName(obj.getString("videoName"));
                 vm.setVideoId(obj.getString("videoId"));
-                vm.setClassName(obj.getString("className"));
                 vm.setVideoType(obj.getString("videoType"));
                 vm.setImgurl(obj.getString("imgurl"));
-                vm.setUrl(obj.getString("url"));
                 vm.setClick(obj.getString("click"));
                 vm.setVideoInfo(obj.getString("videoInfo"));
                 vm.setCreateDate(obj.getString("createDate"));
+                if (tag != FunctionTag.FROM_HOME_LIVE) {
+                    vm.setUrl(obj.getString("url"));
+                    vm.setClassName(obj.getString("className"));
+                }
                 videos.add(vm);
             }
         } catch (JSONException e) {
@@ -180,11 +193,15 @@ public class VideoListActivity extends Activity {
         }
         loadListView.onLoadFinish(LoadListView.LOADMORE_SUCCESS);
         pageNow += 1;
-//        adapter.setData(videos);
-//        adapter.notifyDataSetChanged();
-        adapter = new VideoListAdapter(VideoListActivity.this, videos);
-        loadListView.setAdapter(adapter);
 
+        if (is_first_load) {
+            adapter = new VideoListAdapter(VideoListActivity.this, videos);
+            loadListView.setAdapter(adapter);
+            is_first_load = false;
+        } else {
+            adapter.setData(videos);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private Handler mHandler = new Handler() {
@@ -200,7 +217,13 @@ public class VideoListActivity extends Activity {
                     JSONArray dvResult = (JSONArray) msg.obj;
                     refreshData(dvResult);
                     break;
+                case FunctionTag.LIVEVIDEO:
+                    JSONArray liveResult = (JSONArray) msg.obj;
+                    refreshData(liveResult);
+                    break;
                 case FunctionTag.ERROR:
+                    fl_nodata.setVisibility(View.VISIBLE);
+                    loadListView.setVisibility(View.GONE);
                     break;
             }
         }

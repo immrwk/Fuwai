@@ -1,10 +1,12 @@
 package com.immrwk.myworkspace.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.accessibility.CaptioningManager;
 import android.webkit.WebView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.RequestQueue;
@@ -22,6 +25,7 @@ import com.immrwk.myworkspace.adapter.VideoAdapter;
 import com.immrwk.myworkspace.bean.VideoModel;
 import com.immrwk.myworkspace.function.FunctionTag;
 import com.immrwk.myworkspace.function.UserFunction;
+import com.immrwk.myworkspace.util.KLog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,14 +42,27 @@ public class HomeFragment extends Fragment {
     private RequestQueue mRequestQueue;
     private List<VideoModel> demandVideos = new ArrayList<>();
     private List<VideoModel> liveVideos = new ArrayList<>();
+    private int pageNow = 0;
 
     private GridView gv_demand;
     private GridView gv_live;
     private GridView gv_history;
     private VideoAdapter adapter;
 
-    private static final String NORMAL_VIDEO = "1";
-    private static final int INTERACTION_VIDEO = 2;
+    private LinearLayout ll_livevideo;
+    private LinearLayout ll_demandvideo;
+
+    /**
+     * viewpager
+     */
+    private ViewPager mViewPager;
+    /**
+     * 点播内容类别
+     */
+    private static String CLASSIFYID = "";
+    private static final String ADULTS = "-1";  //成人术后恢复中心
+    private static final String NORMAL_VIDEO = "1";  //心血管内科
+    private static final int INTERACTION_VIDEO = 2;  //
 
     /**
      * 内容类别
@@ -62,31 +79,62 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        CLASSIFYID = ADULTS;
         initViews();
+        initEvents();
         //获取直播视频内容
         getLiveVideos();
         //获取点播视频内容
         getDemandVideos();
     }
 
+    /**
+     * 初始化监听事件
+     */
+    private void initEvents() {
+        ll_livevideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getAllData(FunctionTag.FROM_HOME_LIVE);
+            }
+        });
+        ll_demandvideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getAllData(FunctionTag.FROM_HOME_DEMAND);
+            }
+        });
+    }
+
+    private void getAllData(int tag) {
+        Intent intent = new Intent(getActivity(), VideoListActivity.class);
+        intent.putExtra("tag", tag);
+        if (tag == FunctionTag.FROM_HOME_DEMAND) {
+            intent.putExtra("classifyId", CLASSIFYID);
+        }
+        startActivity(intent);
+    }
+
     private void initViews() {
         gv_demand = (GridView) getView().findViewById(R.id.gv_demand);
         gv_live = (GridView) getView().findViewById(R.id.gv_live);
 //        gv_history = (GridView) getView().findViewById(R.id.gv_history);
+        ll_livevideo = (LinearLayout) getView().findViewById(R.id.ll_livevideo);
+        ll_demandvideo = (LinearLayout) getView().findViewById(R.id.ll_demandvideo);
     }
 
     private void getLiveVideos() {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(getActivity());
         }
-        UserFunction.getLiveVideo(mRequestQueue, 0, AppConfig.user.userId, mHandler);
+        UserFunction.getLiveVideo(mRequestQueue, pageNow, AppConfig.user.userId, mHandler);
     }
 
     private void getDemandVideos() {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(getActivity());
         }
-        UserFunction.getDemandVideo(mRequestQueue, NORMAL_VIDEO, 0, AppConfig.user.userId, mHandler);
+        UserFunction.getDemandVideo(mRequestQueue, CLASSIFYID, pageNow, AppConfig.user.userId, mHandler);
     }
 
     @Override

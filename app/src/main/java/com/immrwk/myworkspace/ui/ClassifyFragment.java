@@ -57,7 +57,7 @@ public class ClassifyFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(getActivity(), VideoListActivity.class);
                 intent.putExtra("tag", FunctionTag.FROM_CLASSIFY);
-                intent.putExtra("classifyid", videos.get(position).getClassifyId());
+                intent.putExtra("classifyId", videos.get(position).getClassifyId());
                 startActivity(intent);
             }
         });

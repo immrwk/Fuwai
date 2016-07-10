@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#44F0F0F0">
+            android:background="#66000000">
 
             <TextView
                 android:id="@+id/tv_videoname"

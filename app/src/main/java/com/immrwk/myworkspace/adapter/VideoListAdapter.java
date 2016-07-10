@@ -65,7 +65,11 @@ public class VideoListAdapter extends BaseAdapter {
         }
 
         VideoModel vm = videos.get(position);
-        holder.tvVideoType.setText(vm.getClassName());
+        if (vm.getClassName() != null) {
+            holder.tvVideoType.setText(vm.getClassName());
+        } else {
+            holder.tvVideoType.setText("无");
+        }
         holder.tvVideoName.setText(vm.getVideoName());
         holder.tvVideoHits.setText(vm.getClick());
         setSmallImgSize(holder);
