@@ -1,24 +1,26 @@
 package com.immrwk.myworkspace.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.accessibility.CaptioningManager;
-import android.webkit.WebView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.immrwk.myworkspace.AppConfig;
 import com.immrwk.myworkspace.R;
 import com.immrwk.myworkspace.adapter.VideoAdapter;
@@ -33,6 +35,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Administrator on 2016/5/27 0027.
@@ -56,6 +60,39 @@ public class HomeFragment extends Fragment {
      * viewpager
      */
     private ViewPager mViewPager;
+    private ImageView[] mIndicator;
+    private TextView tv_title;
+    private boolean mIsUserTouched = false;
+    private int mBannerPosition = 0;
+    private final int FAKE_BANNER_SIZE = 100;
+    private final int DEFAULT_BANNER_SIZE = 3;
+    private Timer mTimer = new Timer();
+    private List<VideoModel> bannerVideos = new ArrayList<>();
+    private BannerAdapter bannerAdapter;
+
+    private TimerTask mTimerTask = new TimerTask() {
+        @Override
+        public void run() {
+            if (!mIsUserTouched) {
+                mBannerPosition = (mBannerPosition + 1) % FAKE_BANNER_SIZE;
+                /**
+                 * Android在子线程更新UI的几种方法
+                 * Handler，AsyncTask,view.post,runOnUiThread
+                 */
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mBannerPosition == FAKE_BANNER_SIZE - 1) {
+                            mViewPager.setCurrentItem(DEFAULT_BANNER_SIZE - 1, false);
+                        } else {
+                            mViewPager.setCurrentItem(mBannerPosition);
+                        }
+                    }
+                });
+            }
+        }
+    };
+
     /**
      * 点播内容类别
      */
@@ -82,10 +119,9 @@ public class HomeFragment extends Fragment {
         CLASSIFYID = ADULTS;
         initViews();
         initEvents();
-        //获取直播视频内容
-        getLiveVideos();
-        //获取点播视频内容
-        getDemandVideos();
+        //获取所有视频
+        getAllVideos();
+        mTimer.schedule(mTimerTask, 5000, 5000);
     }
 
     /**
@@ -104,6 +140,46 @@ public class HomeFragment extends Fragment {
                 getAllData(FunctionTag.FROM_HOME_DEMAND);
             }
         });
+        mViewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
+                    mIsUserTouched = true;
+                } else if (action == MotionEvent.ACTION_UP) {
+                    mIsUserTouched = false;
+                }
+                return false;
+            }
+        });
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mBannerPosition = position;
+                setIndicator(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private void setIndicator(int position) {
+        position %= DEFAULT_BANNER_SIZE;
+        //遍历mIndicator重置src为normal
+        for (ImageView indicator : mIndicator) {
+            indicator.setImageResource(R.drawable.dot_normal);
+        }
+        KLog.e("position="+position);
+        mIndicator[position].setImageResource(R.drawable.dot_focused);
+        tv_title.setText(bannerVideos.get(position).getVideoName());
     }
 
     private void getAllData(int tag) {
@@ -121,6 +197,23 @@ public class HomeFragment extends Fragment {
 //        gv_history = (GridView) getView().findViewById(R.id.gv_history);
         ll_livevideo = (LinearLayout) getView().findViewById(R.id.ll_livevideo);
         ll_demandvideo = (LinearLayout) getView().findViewById(R.id.ll_demandvideo);
+        mViewPager = (ViewPager) getView().findViewById(R.id.view_pager);
+        mIndicator = new ImageView[]{
+                (ImageView) getView().findViewById(R.id.dot_indicator1),
+                (ImageView) getView().findViewById(R.id.dot_indicator2),
+                (ImageView) getView().findViewById(R.id.dot_indicator3),
+        };
+        tv_title = (TextView) getView().findViewById(R.id.tv_title);
+    }
+
+
+    private void getAllVideos() {
+        //获取推荐视频内容
+        getRecommendVideos();
+        //获取直播视频内容
+        getLiveVideos();
+        //获取点播视频内容
+        getDemandVideos();
     }
 
     private void getLiveVideos() {
@@ -135,6 +228,17 @@ public class HomeFragment extends Fragment {
             mRequestQueue = Volley.newRequestQueue(getActivity());
         }
         UserFunction.getDemandVideo(mRequestQueue, CLASSIFYID, pageNow, AppConfig.user.userId, mHandler);
+    }
+
+
+    /**
+     * 获取视频推荐内容
+     */
+    private void getRecommendVideos() {
+        if (mRequestQueue == null) {
+            mRequestQueue = Volley.newRequestQueue(getActivity());
+        }
+        UserFunction.getRecommendVideo(mRequestQueue, AppConfig.user.userId, mHandler);
     }
 
     @Override
@@ -173,6 +277,35 @@ public class HomeFragment extends Fragment {
         gv.setAdapter(adapter);
     }
 
+
+    /**
+     * 视频推荐
+     */
+    private void handleRecommendVideoResult(JSONArray result) {
+        JSONObject obj;
+        bannerVideos.clear();
+        try {
+            for (int i = 0; i < result.length(); i++) {
+                obj = result.getJSONObject(i);
+                VideoModel vm = new VideoModel();
+                vm.setVideoName(obj.getString("videoName"));
+                vm.setVideoId(obj.getString("videoId"));
+                vm.setVideoType(obj.getString("videoType"));
+                vm.setImgurl(obj.getString("imgurl"));
+                vm.setClick(obj.getString("click"));
+                vm.setVideoInfo(obj.getString("videoInfo"));
+                vm.setCreateDate(obj.getString("createDate"));
+
+                bannerVideos.add(vm);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        bannerAdapter = new BannerAdapter(getActivity(), bannerVideos);
+        mViewPager.setAdapter(bannerAdapter);
+    }
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -187,10 +320,82 @@ public class HomeFragment extends Fragment {
                     JSONArray liveArr = (JSONArray) msg.obj;
                     setVideoData(liveArr, liveVideos, gv_live, LIVE_VIDEO);
                     break;
+                case FunctionTag.RECOMMENDVIDEO:
+                    JSONArray recommendVideo = (JSONArray) msg.obj;
+                    handleRecommendVideoResult(recommendVideo);
                 case FunctionTag.ERROR:
 
                     break;
             }
         }
     };
+
+    private class BannerAdapter extends PagerAdapter {
+
+        private Context context;
+        private List<VideoModel> recommendVideos;
+
+        public BannerAdapter(Context context, List<VideoModel> recommendVideos) {
+            this.context = context;
+            this.recommendVideos = recommendVideos;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            position %= DEFAULT_BANNER_SIZE;
+
+            View view = LayoutInflater.from(context).inflate(R.layout.item_banner, container, false);
+            ImageView image = (ImageView) view.findViewById(R.id.image);
+
+            Glide.with(context)
+                    .load(recommendVideos.get(position).getImgurl())
+                    .into(image);
+
+            final int pos = position;
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    KLog.e(pos + "-->" + recommendVideos.get(pos).getVideoName());
+                }
+            });
+            container.addView(view);
+
+            return view;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        @Override
+        public int getCount() {
+            return FAKE_BANNER_SIZE;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+
+        @Override
+        public void finishUpdate(ViewGroup container) {
+            //这个有点懵逼..
+            int position = mViewPager.getCurrentItem();
+            if (position == 0) {
+                position = DEFAULT_BANNER_SIZE;
+                mViewPager.setCurrentItem(position, false);
+            } else if (position == FAKE_BANNER_SIZE - 1) {
+                position = DEFAULT_BANNER_SIZE - 1;
+                mViewPager.setCurrentItem(position, false);
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mTimer.cancel();
+    }
 }

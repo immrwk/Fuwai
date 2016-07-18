@@ -187,4 +187,26 @@ public class UserFunction {
         mRequestQueue.add(rep);
         mRequestQueue.start();
     }
+
+    public static void getRecommendVideo(RequestQueue mRequestQueue, String userId, final Handler handler) {
+        String recommendVideoUrl = FuwaiAPI.RecommendVideoUrl + "?userId=" + userId;
+        KLog.e("recommendVideoUrl="+recommendVideoUrl);
+        JsonArrayRequest rep = new JsonArrayRequest(recommendVideoUrl, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                Message msg = Message.obtain();
+                msg.obj = jsonArray;
+                msg.what = FunctionTag.RECOMMENDVIDEO;
+                handler.sendMessage(msg);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.e("error!!", volleyError.toString());
+            }
+        });
+        mRequestQueue.add(rep);
+        mRequestQueue.start();
+    }
+
 }
