@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:underLine="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f0f0f0"
@@ -36,54 +37,58 @@
         android:layout_height="wrap_content"
         android:src="@drawable/fuwai_text" />
 
-    <EditText
+    <com.immrwk.myworkspace.widget.UnderlineEditText
         android:id="@+id/edt_account"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="@dimen/dimen_20dp"
         android:layout_marginRight="@dimen/dimen_20dp"
-        android:background="@drawable/shape_btn_edt"
+        android:background="@null"
         android:hint="@string/hint_name"
         android:paddingLeft="@dimen/dimen_5dp"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        underLine:underLineColorEt="@color/commonPurple" />
 
-    <EditText
+    <com.immrwk.myworkspace.widget.UnderlineEditText
         android:id="@+id/edt_password"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="@dimen/dimen_20dp"
         android:layout_marginRight="@dimen/dimen_20dp"
         android:layout_marginTop="@dimen/dimen_5dp"
-        android:background="@drawable/shape_btn_edt"
+        android:background="@null"
         android:hint="@string/hint_password"
         android:inputType="textPassword"
         android:paddingLeft="@dimen/dimen_5dp"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        underLine:underLineColorEt="@color/commonPurple" />
 
-    <EditText
+    <com.immrwk.myworkspace.widget.UnderlineEditText
         android:id="@+id/edt_email"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="@dimen/dimen_20dp"
         android:layout_marginRight="@dimen/dimen_20dp"
         android:layout_marginTop="@dimen/dimen_5dp"
-        android:background="@drawable/shape_btn_edt"
+        android:background="@null"
         android:hint="请输入邮箱"
         android:paddingLeft="@dimen/dimen_5dp"
         android:textSize="20sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        underLine:underLineColorEt="@color/commonPurple" />
 
-    <EditText
+    <com.immrwk.myworkspace.widget.UnderlineEditText
         android:id="@+id/edt_ip"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="@dimen/dimen_20dp"
         android:layout_marginRight="@dimen/dimen_20dp"
         android:layout_marginTop="@dimen/dimen_5dp"
-        android:background="@drawable/shape_btn_edt"
+        android:background="@null"
         android:hint="@string/hint_ip"
         android:paddingLeft="@dimen/dimen_5dp"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        underLine:underLineColorEt="@color/commonPurple" />
 
     <Button
         android:id="@+id/btn_login"
@@ -91,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_20dp"
         android:layout_marginRight="@dimen/dimen_20dp"
-        android:layout_marginTop="@dimen/dimen_5dp"
+        android:layout_marginTop="@dimen/dimen_10dp"
         android:background="@drawable/selector_btn_login"
         android:text="@string/login_text"
         android:textColor="@color/colorBlack"

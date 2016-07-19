@@ -19,6 +19,7 @@ import com.immrwk.myworkspace.bean.User;
 import com.immrwk.myworkspace.function.FunctionTag;
 import com.immrwk.myworkspace.function.UserFunction;
 import com.immrwk.myworkspace.util.MD5Util;
+import com.immrwk.myworkspace.widget.UnderlineEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,13 +30,18 @@ import org.json.JSONObject;
  */
 public class LoginActivity extends Activity {
 
+    private UnderlineEditText edt_account;
+    private UnderlineEditText edt_password;
+    private UnderlineEditText edt_ip;
+    private UnderlineEditText edt_email;
+
     private Button btn_login;
-    private EditText edt_account;
-    private EditText edt_password;
-    private EditText edt_ip;
+//    private EditText edt_account;
+//    private EditText edt_password;
+//    private EditText edt_ip;
+//    private EditText edt_email;
     private RequestQueue mRequestQueue;
     private TextView tv_register;
-    private EditText edt_email;
 
     private boolean isLogin = false;
 
@@ -91,11 +97,11 @@ public class LoginActivity extends Activity {
 
     private void initViews() {
         btn_login = (Button) findViewById(R.id.btn_login);
-        edt_account = (EditText) findViewById(R.id.edt_account);
-        edt_password = (EditText) findViewById(R.id.edt_password);
-        edt_ip = (EditText) findViewById(R.id.edt_ip);
+        edt_account = (UnderlineEditText) findViewById(R.id.edt_account);
+        edt_password = (UnderlineEditText) findViewById(R.id.edt_password);
+        edt_ip = (UnderlineEditText) findViewById(R.id.edt_ip);
+        edt_email = (UnderlineEditText) findViewById(R.id.edt_email);
         tv_register = (TextView) findViewById(R.id.tv_register);
-        edt_email = (EditText) findViewById(R.id.edt_email);
         edt_account.setText("15501095357");
         edt_password.setText("123456");
         edt_ip.setText("106.120.203.85:8088");

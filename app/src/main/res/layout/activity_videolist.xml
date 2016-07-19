@@ -5,31 +5,12 @@
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dimen_5dp">
+    <include layout="@layout/title" />
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dimen_25dp"
-            android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/dimen_5dp"
-            android:paddingRight="@dimen/dimen_5dp"
-            android:src="@drawable/arrowleft" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            android:src="@drawable/fuwai_text" />
-    </RelativeLayout>
-
-    <ImageView
+    <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:src="#F0F0F0" />
+        android:background="#F0F0F0" />
 
     <FrameLayout
         android:id="@+id/fl_nodata"
