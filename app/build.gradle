@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.immrwk.myworkspace"
@@ -26,4 +26,5 @@ dependencies {
     compile files('libs/volley.jar')
     compile files('libs/fastjson-1.1.33.jar')
     compile files('libs/glide3.7.0.jar')
+    compile project(path: ':jcvideoplayer-lib')
 }

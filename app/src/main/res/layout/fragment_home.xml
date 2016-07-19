@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:scrollbars="none">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -17,6 +16,12 @@
 
             <include layout="@layout/banner_main" />
         </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_10dp"
+            android:background="#F0F0F0"/>
+
 
         <!--直播内容部分-->
         <LinearLayout

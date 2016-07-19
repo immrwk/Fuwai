@@ -188,15 +188,50 @@ public class UserFunction {
         mRequestQueue.start();
     }
 
+    /**
+     * 获取推荐视频
+     *
+     * @param mRequestQueue
+     * @param userId
+     * @param handler
+     */
     public static void getRecommendVideo(RequestQueue mRequestQueue, String userId, final Handler handler) {
         String recommendVideoUrl = FuwaiAPI.RecommendVideoUrl + "?userId=" + userId;
-        KLog.e("recommendVideoUrl="+recommendVideoUrl);
         JsonArrayRequest rep = new JsonArrayRequest(recommendVideoUrl, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
                 Message msg = Message.obtain();
                 msg.obj = jsonArray;
                 msg.what = FunctionTag.RECOMMENDVIDEO;
+                handler.sendMessage(msg);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.e("error!!", volleyError.toString());
+            }
+        });
+        mRequestQueue.add(rep);
+        mRequestQueue.start();
+    }
+
+    /**
+     * 根据视频id获取视频地址
+     *
+     * @param mRequestQueue
+     * @param videoId
+     * @param handler
+     */
+
+
+    public static void getVideoUrl(RequestQueue mRequestQueue, String videoId, final Handler handler) {
+        String getVideoUrl = FuwaiAPI.GetVideoUrl + "?videoId=" + videoId;
+        JsonArrayRequest rep = new JsonArrayRequest(getVideoUrl, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                Message msg = Message.obtain();
+                msg.obj = jsonArray;
+                msg.what = FunctionTag.GETVIDEOURL;
                 handler.sendMessage(msg);
             }
         }, new Response.ErrorListener() {

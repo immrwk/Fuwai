@@ -92,6 +92,24 @@ public class VideoListActivity extends Activity {
 
             }
         });
+
+        loadListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                startVideoPlayActivity(videos.get(position));
+            }
+        });
+    }
+
+    /**
+     * 跳转到视频播放界面
+     */
+    private void startVideoPlayActivity(VideoModel vm) {
+        Intent intent = new Intent(VideoListActivity.this, VideoPlayActivity.class);
+        intent.putExtra("videoUrl", vm.getUrl());
+        intent.putExtra("imgUrl", vm.getImgurl());
+        intent.putExtra("videoName", vm.getVideoName());
+        startActivity(intent);
     }
 
     private void getData(int tag) {
@@ -183,7 +201,11 @@ public class VideoListActivity extends Activity {
                 vm.setVideoInfo(obj.getString("videoInfo"));
                 vm.setCreateDate(obj.getString("createDate"));
                 if (tag != FunctionTag.FROM_HOME_LIVE) {
-                    vm.setUrl(obj.getString("url"));
+                    if (tag == FunctionTag.FROM_SEARCH) {
+                        vm.setUrl(obj.getString("url"));
+                    } else {
+                        vm.setUrl("http://106.120.203.85/install/videoupload" + obj.getString("url"));
+                    }
                     vm.setClassName(obj.getString("className"));
                 }
                 videos.add(vm);
@@ -220,6 +242,19 @@ public class VideoListActivity extends Activity {
                 case FunctionTag.LIVEVIDEO:
                     JSONArray liveResult = (JSONArray) msg.obj;
                     refreshData(liveResult);
+                    UserFunction.getVideoUrl(mRequestQueue, videos.get(0).getVideoId(), mHandler);
+                    break;
+                case FunctionTag.GETVIDEOURL:
+                    JSONArray urlArr = (JSONArray) msg.obj;
+
+                    if (videos.size() <= 0) {
+                        return;
+                    }
+                    try {
+                        videos.get(0).setUrl(urlArr.getJSONObject(0).getString("url"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case FunctionTag.ERROR:
                     fl_nodata.setVisibility(View.VISIBLE);

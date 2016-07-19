@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dimen_20dp"
+            android:layout_height="@dimen/dimen_25dp"
             android:layout_centerVertical="true"
             android:paddingLeft="@dimen/dimen_5dp"
             android:paddingRight="@dimen/dimen_5dp"
@@ -21,7 +21,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dimen_30dp"
+            android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:src="@drawable/fuwai_text" />
     </RelativeLayout>

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -169,6 +170,18 @@ public class HomeFragment extends Fragment {
 
             }
         });
+        gv_demand.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                startVideoPlayActivity(demandVideos.get(position));
+            }
+        });
+        gv_live.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                startVideoPlayActivity(liveVideos.get(position));
+            }
+        });
     }
 
     private void setIndicator(int position) {
@@ -177,7 +190,7 @@ public class HomeFragment extends Fragment {
         for (ImageView indicator : mIndicator) {
             indicator.setImageResource(R.drawable.dot_normal);
         }
-        KLog.e("position="+position);
+        mIndicator[position].setImageResource(R.drawable.dot_focused);
         mIndicator[position].setImageResource(R.drawable.dot_focused);
         tv_title.setText(bannerVideos.get(position).getVideoName());
     }
@@ -264,7 +277,7 @@ public class HomeFragment extends Fragment {
                 vm.setVideoInfo(obj.getString("videoInfo"));
                 vm.setCreateDate(obj.getString("createDate"));
                 if (videoType == DEMAND_VIDEO) {
-                    vm.setUrl(obj.getString("url"));
+                    vm.setUrl("http://106.120.203.85/install/videoupload" + obj.getString("url"));
                     vm.setClassName(obj.getString("className"));
                 }
                 videos.add(vm);
@@ -295,6 +308,7 @@ public class HomeFragment extends Fragment {
                 vm.setClick(obj.getString("click"));
                 vm.setVideoInfo(obj.getString("videoInfo"));
                 vm.setCreateDate(obj.getString("createDate"));
+                vm.setUrl(obj.getString("url"));
 
                 bannerVideos.add(vm);
             }
@@ -304,6 +318,17 @@ public class HomeFragment extends Fragment {
 
         bannerAdapter = new BannerAdapter(getActivity(), bannerVideos);
         mViewPager.setAdapter(bannerAdapter);
+    }
+
+    /**
+     * 跳转到视频播放界面
+     */
+    private void startVideoPlayActivity(VideoModel vm) {
+        Intent intent = new Intent(getActivity(), VideoPlayActivity.class);
+        intent.putExtra("videoUrl", vm.getUrl());
+        intent.putExtra("imgUrl", vm.getImgurl());
+        intent.putExtra("videoName", vm.getVideoName());
+        startActivity(intent);
     }
 
     private Handler mHandler = new Handler() {
@@ -319,10 +344,23 @@ public class HomeFragment extends Fragment {
                 case FunctionTag.LIVEVIDEO:
                     JSONArray liveArr = (JSONArray) msg.obj;
                     setVideoData(liveArr, liveVideos, gv_live, LIVE_VIDEO);
+                    UserFunction.getVideoUrl(mRequestQueue, liveVideos.get(0).getVideoId(), mHandler);
+                    break;case FunctionTag.GETVIDEOURL:
+                    JSONArray urlArr = (JSONArray) msg.obj;
+
+                    if (liveVideos.size() <= 0) {
+                        return;
+                    }
+                    try {
+                        liveVideos.get(0).setUrl(urlArr.getJSONObject(0).getString("url"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case FunctionTag.RECOMMENDVIDEO:
                     JSONArray recommendVideo = (JSONArray) msg.obj;
                     handleRecommendVideoResult(recommendVideo);
+
                 case FunctionTag.ERROR:
 
                     break;
@@ -355,8 +393,9 @@ public class HomeFragment extends Fragment {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    KLog.e(pos + "-->" + recommendVideos.get(pos).getVideoName());
+                    startVideoPlayActivity(recommendVideos.get(pos));
                 }
+
             });
             container.addView(view);
 
