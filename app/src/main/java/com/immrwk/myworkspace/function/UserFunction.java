@@ -19,6 +19,13 @@ import org.json.JSONArray;
  */
 public class UserFunction {
 
+    /**
+     * 更新版本
+     *
+     * @param mRequestQueue
+     * @param versionCode
+     * @param handler
+     */
     public static void updateVersion(RequestQueue mRequestQueue, String versionCode, final Handler handler) {
         final String url = FuwaiAPI.UpdateVersionUrl + versionCode;
 
@@ -40,6 +47,43 @@ public class UserFunction {
         mRequestQueue.start();
     }
 
+    /**
+     * 注册接口
+     *
+     * @param mRequestQueue
+     * @param account
+     * @param password
+     * @param email
+     * @param handler
+     */
+    public static void register(RequestQueue mRequestQueue, String account, String password, String email, final Handler handler) {
+        String registerUrl = FuwaiAPI.RegisterUrl + "?userName=" + account + "&password=" + password + "&email=" + email;
+        JsonArrayRequest rep = new JsonArrayRequest(registerUrl, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                Message msg = Message.obtain();
+                msg.obj = jsonArray;
+                msg.what = FunctionTag.REGISTER;
+                handler.sendMessage(msg);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.i("error!!", volleyError.toString());
+            }
+        });
+        mRequestQueue.add(rep);
+        mRequestQueue.start();
+    }
+
+    /**
+     * 登录接口
+     *
+     * @param mRequestQueue
+     * @param account
+     * @param password
+     * @param handler
+     */
     public static void login(RequestQueue mRequestQueue, String account, String password, final Handler handler) {
         String loginUrl = FuwaiAPI.LoginUrl + "?userName=" + account + "&password=" + password;
 
@@ -61,6 +105,13 @@ public class UserFunction {
         mRequestQueue.start();
     }
 
+    /**
+     * 获取搜索结果
+     *
+     * @param mRequestQueue
+     * @param userId
+     * @param handler
+     */
     public static void getSearchSort(RequestQueue mRequestQueue, String userId, final Handler handler) {
         String searchSortUrl = FuwaiAPI.SearchSortUrl + "?userId=" + userId;
 
@@ -82,6 +133,12 @@ public class UserFunction {
         mRequestQueue.start();
     }
 
+    /**
+     * 获取视频分类
+     *
+     * @param mRequestQueue
+     * @param handler
+     */
     public static void getVideoClassify(RequestQueue mRequestQueue, final Handler handler) {
         String videoClassifyUrl = FuwaiAPI.VideoClassify;
         JsonArrayRequest rep = new JsonArrayRequest(videoClassifyUrl, new Response.Listener<JSONArray>() {
@@ -222,8 +279,6 @@ public class UserFunction {
      * @param videoId
      * @param handler
      */
-
-
     public static void getVideoUrl(RequestQueue mRequestQueue, String videoId, final Handler handler) {
         String getVideoUrl = FuwaiAPI.GetVideoUrl + "?videoId=" + videoId;
         JsonArrayRequest rep = new JsonArrayRequest(getVideoUrl, new Response.Listener<JSONArray>() {

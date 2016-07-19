@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,35 +37,71 @@ public class LoginActivity extends Activity {
     private UnderlineEditText edt_email;
 
     private Button btn_login;
-//    private EditText edt_account;
-//    private EditText edt_password;
-//    private EditText edt_ip;
-//    private EditText edt_email;
     private RequestQueue mRequestQueue;
     private TextView tv_register;
 
     private boolean isLogin = false;
+
+    private String account = "";
+    private String password = "";
+    private String ip = "";
+    private String email = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
-        setOnClickListener();
+        initEvents();
     }
 
-    private void setOnClickListener() {
+
+    /**
+     * 检查输入信息是否完整
+     */
+    private boolean checkInput() {
+        account = edt_account.getText().toString();
+        password = edt_password.getText().toString();
+        ip = edt_ip.getText().toString();
+        email = edt_email.getText().toString();
+        if (account.equals("")) {
+            Toast.makeText(LoginActivity.this, "请输入用户名", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (password.equals("")) {
+            Toast.makeText(LoginActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!isLogin) {
+            if (email.equals("")) {
+                Toast.makeText(LoginActivity.this, "请输入邮箱地址", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        if (ip.equals("")) {
+            Toast.makeText(LoginActivity.this, "请输入ip地址", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private void initEvents() {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String account = edt_account.getText().toString();
-                String password = edt_password.getText().toString();
-                String ip = edt_ip.getText().toString();
-                if (account.equals("") || password.equals("") || ip.equals("")) {
-                    Toast.makeText(LoginActivity.this, "信息不全", Toast.LENGTH_SHORT).show();
-                } else {
-                    mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+                if (!checkInput()) {
+                    return;
+                }
+                if (isLogin) {
+                    if (mRequestQueue == null) {
+                        mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+                    }
                     UserFunction.login(mRequestQueue, account, MD5Util.string2MD5(password), handler);
+                } else if (!isLogin) {
+                    if (mRequestQueue == null) {
+                        mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+                    }
+                    UserFunction.register(mRequestQueue, account, MD5Util.string2MD5(password), email, handler);
                 }
             }
         });
@@ -73,13 +110,13 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if (!isLogin) {
-                    tv_register.setText(" 登录 ");
+                    tv_register.setText(Html.fromHtml("<u>" + getResources().getString(R.string.now_login) + "</u>"));
                     btn_login.setText("注册");
                     edt_email.setVisibility(View.VISIBLE);
                     isLogin = true;
                 } else {
-                    tv_register.setText(" 注册 ");
                     btn_login.setText("登录");
+                    tv_register.setText(Html.fromHtml("<u>" + getResources().getString(R.string.now_register) + "</u>"));
                     edt_email.setVisibility(View.GONE);
                     isLogin = false;
                 }
@@ -134,6 +171,9 @@ public class LoginActivity extends Activity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(intent);
                     finish();
+                    break;
+                case FunctionTag.REGISTER:
+                    UserFunction.login(mRequestQueue, account, MD5Util.string2MD5(password), handler);
                     break;
                 case FunctionTag.ERROR:
                     break;

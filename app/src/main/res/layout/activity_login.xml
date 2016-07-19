@@ -20,21 +20,13 @@
             android:layout_marginTop="@dimen/dimen_10dp"
             android:src="@drawable/fuwai_icon" />
 
-        <TextView
-            android:id="@+id/tv_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="0dp"
-            android:background="#6B0334"
-            android:text=" 注册 "
-            android:textColor="#ffffff"
-            android:textSize="30sp" />
     </RelativeLayout>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dimen_20dp"
+        android:paddingRight="@dimen/dimen_20dp"
         android:src="@drawable/fuwai_text" />
 
     <com.immrwk.myworkspace.widget.UnderlineEditText
@@ -89,6 +81,15 @@
         android:paddingLeft="@dimen/dimen_5dp"
         android:textSize="20sp"
         underLine:underLineColorEt="@color/commonPurple" />
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_20dp"
+        android:layout_marginLeft="@dimen/dimen_20dp"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        android:text="@string/now_register"
+        android:textColor="@color/commonPurple" />
 
     <Button
         android:id="@+id/btn_login"

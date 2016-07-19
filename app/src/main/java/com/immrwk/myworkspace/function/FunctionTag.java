@@ -17,7 +17,7 @@ public class FunctionTag {
     public static final int LIVEVIDEO = 1007;
     public static final int RECOMMENDVIDEO = 1008;
     public static final int GETVIDEOURL = 1009;
-
+    public static final int REGISTER = 1010;
 
     /**
      * videolistactivity 判断来源tag
@@ -26,5 +26,4 @@ public class FunctionTag {
     public static final int FROM_HOME_DEMAND = 101;
     public static final int FROM_CLASSIFY = 102;
     public static final int FROM_SEARCH = 103;
-
 }
