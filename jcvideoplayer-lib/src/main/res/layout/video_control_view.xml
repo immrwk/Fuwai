@@ -94,7 +94,8 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:scaleType="center"
-            android:src="@drawable/enlarge_video" />
+            android:src="@drawable/enlarge_video"
+            android:visibility="gone" />
     </LinearLayout>
 
     <ImageView
@@ -137,8 +138,8 @@
 
     <ImageView
         android:id="@+id/start"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"

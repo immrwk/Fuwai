@@ -34,7 +34,7 @@ public class FullScreenActivity extends Activity {
         URL = url;
         THUMB = thumb;
         TITLE = title;
-        start = true;
+        start = false;
         Intent intent = new Intent(context, FullScreenActivity.class);
         context.startActivity(intent);
     }

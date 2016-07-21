@@ -89,6 +89,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     private static ImageView.ScaleType speScalType = null;
 
+    private Context mContext;
+
     public JCVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
         uuid = UUID.randomUUID().toString();
@@ -96,6 +98,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     private void init(Context context) {
+        mContext = context;
         View.inflate(context, R.layout.video_control_view, this);
         ivStart = (ImageView) findViewById(R.id.start);
         pbLoading = (ProgressBar) findViewById(R.id.loading);
@@ -129,6 +132,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         if (speScalType != null) {
             ivThumb.setScaleType(speScalType);
         }
+//        EventBus.getDefault().register(mContext);
     }
 
     /**
@@ -345,7 +349,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.start || i == R.id.thumb) {
+//        if (i == R.id.start || i == R.id.thumb) {
+        if (i == R.id.start) {
+            Log.e("wang", "click start" + "CURRENT_STATE=" + CURRENT_STATE);
             if (TextUtils.isEmpty(url)) {
                 Toast.makeText(getContext(), "视频地址为空", Toast.LENGTH_SHORT).show();
                 return;
@@ -419,6 +425,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             //JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
         } else if (i == R.id.back) {
             quitFullScreen();
+//            EventBus.getDefault().unregister(mContext);
         }
     }
 
@@ -603,7 +610,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
 //        cancelDismissControlViewTimer();
         if (uuid.equals(JCMediaManager.intance().uuid)) {
             JCMediaManager.intance().mediaPlayer.stop();
@@ -827,4 +836,5 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         this.enlargRecId = skin.enlargRecId;
         this.shrinkRecId = skin.shrinkRecId;
     }
+
 }

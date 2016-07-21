@@ -39,6 +39,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import fm.jiecao.jcvideoplayer_lib.FullScreenActivity;
+
 /**
  * Created by Administrator on 2016/5/27 0027.
  */
@@ -173,7 +175,8 @@ public class HomeFragment extends Fragment {
         gv_demand.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                startVideoPlayActivity(demandVideos.get(position));
+//                startVideoPlayActivity(demandVideos.get(position));
+                FullScreenActivity.toActivity(getActivity(), demandVideos.get(position).getUrl(), null, demandVideos.get(position).getVideoName());
             }
         });
         gv_live.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -345,7 +348,8 @@ public class HomeFragment extends Fragment {
                     JSONArray liveArr = (JSONArray) msg.obj;
                     setVideoData(liveArr, liveVideos, gv_live, LIVE_VIDEO);
                     UserFunction.getVideoUrl(mRequestQueue, liveVideos.get(0).getVideoId(), mHandler);
-                    break;case FunctionTag.GETVIDEOURL:
+                    break;
+                case FunctionTag.GETVIDEOURL:
                     JSONArray urlArr = (JSONArray) msg.obj;
 
                     if (liveVideos.size() <= 0) {

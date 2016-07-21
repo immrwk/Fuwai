@@ -32,6 +32,8 @@ public class VideoPlayActivity extends Activity {
         getData();
         initViews();
         initEvents();
+        toFullScreen();
+        finish();
     }
 
     private void getData() {

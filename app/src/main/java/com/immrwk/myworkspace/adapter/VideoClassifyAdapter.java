@@ -73,19 +73,20 @@ public class VideoClassifyAdapter extends BaseAdapter {
         holder.tvVideoName.setText(model.getClassifyName());
         //图片处理
 
-
+        //用AsyncTask加载
 //        new Task(holder.ivVideoPic, model.getImgurl()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,"");
 
-        //volley框架imageloader加载图片，加载太慢！！！
+        //volley框架imageloader加载图片
 //        ImageLoader.ImageListener listener = ImageLoader.getImageListener(holder.ivVideoPic, R.drawable.search_normal, R.drawable.search_selected);
 //        RequestQueue mQueue = Volley.newRequestQueue(context);
 //        ImageLoader mImageLoader = new ImageLoader(mQueue, new BitmapCache());
 //        mImageLoader.get(model.getImgurl(), listener);
 
+        //使用glide库加载
         Glide.with(context)
                 .load(model.getImgurl())
 //                .placeholder(R.drawable.search_normal)
-                .error(R.drawable.search_normal)
+                .error(R.drawable.fuwai_icon)
                 .into(holder.ivVideoPic);
 
         return convertView;

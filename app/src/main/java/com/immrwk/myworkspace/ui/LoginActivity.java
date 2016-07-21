@@ -19,6 +19,7 @@ import com.immrwk.myworkspace.R;
 import com.immrwk.myworkspace.bean.User;
 import com.immrwk.myworkspace.function.FunctionTag;
 import com.immrwk.myworkspace.function.UserFunction;
+import com.immrwk.myworkspace.util.KLog;
 import com.immrwk.myworkspace.util.MD5Util;
 import com.immrwk.myworkspace.widget.UnderlineEditText;
 
@@ -40,7 +41,7 @@ public class LoginActivity extends Activity {
     private RequestQueue mRequestQueue;
     private TextView tv_register;
 
-    private boolean isLogin = false;
+    private boolean isLogin = true;
 
     private String account = "";
     private String password = "";
@@ -109,16 +110,16 @@ public class LoginActivity extends Activity {
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isLogin) {
+                if (isLogin) {
                     tv_register.setText(Html.fromHtml("<u>" + getResources().getString(R.string.now_login) + "</u>"));
                     btn_login.setText("注册");
                     edt_email.setVisibility(View.VISIBLE);
-                    isLogin = true;
+                    isLogin = false;
                 } else {
                     btn_login.setText("登录");
                     tv_register.setText(Html.fromHtml("<u>" + getResources().getString(R.string.now_register) + "</u>"));
                     edt_email.setVisibility(View.GONE);
-                    isLogin = false;
+                    isLogin = true;
                 }
 //                setAllTextNull();
             }
@@ -173,7 +174,16 @@ public class LoginActivity extends Activity {
                     finish();
                     break;
                 case FunctionTag.REGISTER:
-                    UserFunction.login(mRequestQueue, account, MD5Util.string2MD5(password), handler);
+                    JSONArray regArr = (JSONArray) msg.obj;
+                    try {
+                        if (regArr.getJSONObject(0).getString("success").equals("true")) {
+                            UserFunction.login(mRequestQueue, account, MD5Util.string2MD5(password), handler);
+                        } else {
+                            Toast.makeText(LoginActivity.this, regArr.getJSONObject(0).getString("msg"), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case FunctionTag.ERROR:
                     break;

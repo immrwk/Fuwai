@@ -40,7 +40,7 @@ public class UserFunction {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.i("error!!", volleyError.toString());
+                Log.i("error!!", "UserFunction.updateVersion:" + volleyError.toString());
             }
         });
         mRequestQueue.add(rep);
@@ -69,7 +69,7 @@ public class UserFunction {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.i("error!!", volleyError.toString());
+                Log.i("error!!", "UserFunction.register:" + volleyError.toString());
             }
         });
         mRequestQueue.add(rep);
@@ -98,7 +98,7 @@ public class UserFunction {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.i("error!!", volleyError.toString());
+                Log.i("error!!", "UserFunction.login:" + volleyError.toString());
             }
         });
         mRequestQueue.add(rep);
@@ -126,7 +126,7 @@ public class UserFunction {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.i("error!!", volleyError.toString());
+                Log.i("error!!", "UserFunction.getSearchSort:" + volleyError.toString());
             }
         });
         mRequestQueue.add(rep);
@@ -152,7 +152,7 @@ public class UserFunction {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.i("error!!", volleyError.toString());
+                Log.i("error!!", "UserFunction.getVideoClassify:" + volleyError.toString());
             }
         });
         mRequestQueue.add(rep);
@@ -181,7 +181,7 @@ public class UserFunction {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.i("error!!", volleyError.toString());
+                Log.i("error!!", "UserFunction.getSearchResult:" + volleyError.toString());
             }
         });
         mRequestQueue.add(rep);
@@ -210,7 +210,7 @@ public class UserFunction {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.i("error!!", volleyError.toString());
+                Log.i("error!!", "UserFunction.getDemandVideo:" + volleyError.toString());
             }
         });
         mRequestQueue.add(rep);
@@ -238,7 +238,7 @@ public class UserFunction {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.i("error!!", volleyError.toString());
+                Log.i("error!!", "UserFunction.getLiveVideo:" + volleyError.toString());
             }
         });
         mRequestQueue.add(rep);
@@ -265,7 +265,7 @@ public class UserFunction {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.e("error!!", volleyError.toString());
+                Log.i("error!!", "UserFunction.getRecommendVideo:" + volleyError.toString());
             }
         });
         mRequestQueue.add(rep);
@@ -292,7 +292,7 @@ public class UserFunction {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.e("error!!", volleyError.toString());
+                Log.i("error!!", "UserFunction.getVideoUrl:" + volleyError.toString());
             }
         });
         mRequestQueue.add(rep);
