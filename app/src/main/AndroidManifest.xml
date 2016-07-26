@@ -40,6 +40,12 @@
             android:name=".ui.VideoPlayActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
+        <receiver android:name=".Broadcast.VideoPlayRecevier">
+            <intent-filter>
+                <action android:name="com.immrwk.videoplay" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

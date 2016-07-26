@@ -2,6 +2,7 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -356,7 +357,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         int i = v.getId();
 //        if (i == R.id.start || i == R.id.thumb) {
         if (i == R.id.start) {
-            Log.e("wang", "click start" + "CURRENT_STATE=" + CURRENT_STATE);
             if (TextUtils.isEmpty(url)) {
                 Toast.makeText(getContext(), "视频地址为空", Toast.LENGTH_SHORT).show();
                 return;
@@ -377,6 +377,13 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_START);
                 videoEvents.obj = uuid;
                 EventBus.getDefault().post(videoEvents);
+
+                Intent intent = new Intent("com.immrwk.videoplay");
+                intent.putExtra("url", url);
+                intent.putExtra("imgUrl", thumb);
+                intent.putExtra("videoName", title);
+                mContext.sendBroadcast(intent);
+
                 surfaceView.requestLayout();
                 setKeepScreenOn(true);
 

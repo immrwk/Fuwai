@@ -55,11 +55,9 @@ public class VideoPlayActivity extends Activity {
                 finish();
             }
         });
-        KLog.e("wang", "videoName=" + videoName + ",videoUrl=" + videoUrl + ", imgUrl=" + imgUrl);
         JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
         ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(VideoPlayActivity.this);
         ImageLoader.getInstance().init(configuration);
-//        videoUrl = "http://106.120.203.85:5050/video/Channel2/index.m3u8";
         videoPlayer.setUp(videoUrl, imgUrl, videoName);
     }
 
