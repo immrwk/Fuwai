@@ -27,7 +27,7 @@ public class UserFunction {
      * @param handler
      */
     public static void updateVersion(RequestQueue mRequestQueue, String versionCode, final Handler handler) {
-        final String url = FuwaiAPI.UpdateVersionUrl + versionCode;
+        final String url = FuwaiAPI.UpdateVersionUrl + "?version_code=" + versionCode;
 
         JsonArrayRequest rep = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override

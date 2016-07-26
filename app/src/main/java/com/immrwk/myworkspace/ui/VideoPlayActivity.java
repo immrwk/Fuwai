@@ -55,7 +55,7 @@ public class VideoPlayActivity extends Activity {
                 finish();
             }
         });
-        KLog.e("wang", "videoName=" + videoName + ",videoUrl=" + videoUrl + ",imgUrl=" + imgUrl);
+        KLog.e("wang", "videoName=" + videoName + ",videoUrl=" + videoUrl + ", imgUrl=" + imgUrl);
         JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
         ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(VideoPlayActivity.this);
         ImageLoader.getInstance().init(configuration);

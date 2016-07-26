@@ -3,4 +3,10 @@
     <declare-styleable name="UnderLineEditText">
         <attr name="underLineColorEt" format="color" />
     </declare-styleable>
+    <declare-styleable name="RoundImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="corner_x" format="dimension" />
+        <attr name="corner_y" format="dimension" />
+    </declare-styleable>
 </resources>

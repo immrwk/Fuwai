@@ -93,6 +93,7 @@ public class LoginActivity extends Activity {
                 if (!checkInput()) {
                     return;
                 }
+                KLog.e("btn_login islogin=" + isLogin);
                 if (isLogin) {
                     if (mRequestQueue == null) {
                         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -180,6 +181,7 @@ public class LoginActivity extends Activity {
                             UserFunction.login(mRequestQueue, account, MD5Util.string2MD5(password), handler);
                         } else {
                             Toast.makeText(LoginActivity.this, regArr.getJSONObject(0).getString("msg"), Toast.LENGTH_SHORT).show();
+                            return;
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

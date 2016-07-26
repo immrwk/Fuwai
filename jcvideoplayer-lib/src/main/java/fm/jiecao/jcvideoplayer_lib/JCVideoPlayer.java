@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -198,6 +199,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public void setUpForFullscreen(String url, String thumb, String title) {
         setSkin();
         this.url = url;
+        Log.e("wangkai", "thumb=" + thumb);
         this.thumb = thumb;
         this.title = title;
         this.ifFullScreen = true;
@@ -213,7 +215,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         pbBottom.setVisibility(View.VISIBLE);
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
-
+        JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
+        ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(mContext);
+        ImageLoader.getInstance().init(configuration);
+        ImageLoader.getInstance().displayImage(thumb, ivThumb, Utils.getDefaultDisplayImageOption());
         if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
             ifMp3 = true;
             loadMp3Thum();

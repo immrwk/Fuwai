@@ -175,8 +175,8 @@ public class HomeFragment extends Fragment {
         gv_demand.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                startVideoPlayActivity(demandVideos.get(position));
-                FullScreenActivity.toActivity(getActivity(), demandVideos.get(position).getUrl(), null, demandVideos.get(position).getVideoName());
+                startVideoPlayActivity(demandVideos.get(position));
+//                FullScreenActivity.toActivity(getActivity(), demandVideos.get(position).getUrl(), null, demandVideos.get(position).getVideoName());
             }
         });
         gv_live.setOnItemClickListener(new AdapterView.OnItemClickListener() {

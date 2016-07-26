@@ -105,7 +105,7 @@ public class FullScreenActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
     }
 
 }

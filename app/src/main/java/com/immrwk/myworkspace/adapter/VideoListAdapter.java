@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.immrwk.myworkspace.R;
 import com.immrwk.myworkspace.bean.VideoModel;
+import com.immrwk.myworkspace.widget.RoundImageView;
 
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class VideoListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_videolist, null);
             holder = new ViewHolder();
-            holder.videoPic = (ImageView) convertView.findViewById(R.id.iv_videopic);
+            holder.videoPic = (RoundImageView) convertView.findViewById(R.id.iv_videopic);
             holder.tvVideoName = (TextView) convertView.findViewById(R.id.tv_videoname);
             holder.tvVideoType = (TextView) convertView.findViewById(R.id.tv_videoType);
             holder.tvVideoHits = (TextView) convertView.findViewById(R.id.tv_videoHits);
@@ -90,7 +91,7 @@ public class VideoListAdapter extends BaseAdapter {
     }
 
     public static class ViewHolder {
-        ImageView videoPic; //视频关键帧图片
+        RoundImageView videoPic; //视频关键帧图片
         TextView tvVideoName;//视频名称
         TextView tvVideoCreateTime;//视频创建时间
         TextView tvVideoType;//视频类别 分类名称
