@@ -20,9 +20,55 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_10dp"
-            android:background="#F0F0F0"/>
+            android:background="#F0F0F0" />
 
+        <!--播放历史部分-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/ll_videohistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dimen_5dp"
+                android:paddingTop="@dimen/dimen_5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="@dimen/dimen_5dp"
+                    android:text="播 放 历 史"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_25dp"
+                    android:layout_height="@dimen/dimen_25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_15dp"
+                    android:src="@drawable/arrowright" />
+            </LinearLayout>
+
+            <com.immrwk.myworkspace.widget.TotalGridView
+                android:id="@+id/gv_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:horizontalSpacing="10dp"
+                android:numColumns="2"
+                android:scrollbars="none"
+                android:verticalSpacing="10dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_10dp"
+            android:background="#F0F0F0" />
         <!--直播内容部分-->
         <LinearLayout
             android:layout_width="match_parent"

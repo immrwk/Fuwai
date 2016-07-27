@@ -23,6 +23,7 @@ import com.immrwk.myworkspace.adapter.VideoListAdapter;
 import com.immrwk.myworkspace.bean.User;
 import com.immrwk.myworkspace.bean.VideoClassifyModel;
 import com.immrwk.myworkspace.bean.VideoModel;
+import com.immrwk.myworkspace.db.DatabaseImpl;
 import com.immrwk.myworkspace.function.FunctionTag;
 import com.immrwk.myworkspace.function.UserFunction;
 import com.immrwk.myworkspace.util.KLog;
@@ -109,6 +110,10 @@ public class VideoListActivity extends Activity {
         intent.putExtra("videoUrl", vm.getUrl());
         intent.putExtra("imgUrl", vm.getImgurl());
         intent.putExtra("videoName", vm.getVideoName());
+        intent.putExtra("className", vm.getClassName());
+        intent.putExtra("createDate", vm.getCreateDate());
+        intent.putExtra("click", vm.getClick());
+        intent.putExtra("videoId", vm.getVideoId());
         startActivity(intent);
     }
 
@@ -127,9 +132,35 @@ public class VideoListActivity extends Activity {
             case FunctionTag.FROM_HOME_LIVE:
                 UserFunction.getLiveVideo(mRequestQueue, pageNow, AppConfig.user.userId, mHandler);
                 break;
+            case FunctionTag.FROM_HISTORY:
+                if (is_first_load) {
+                    getVideoHistory();
+                    is_first_load = false;
+                }
+                break;
             default:
                 break;
         }
+    }
+
+    private void getVideoHistory() {
+        DatabaseImpl db = DatabaseImpl.getInstance(VideoListActivity.this);
+        db.open();
+        videos = db.queryVideoHistory();
+        db.close();
+
+//        if (is_first_load) {
+//            adapter = new VideoListAdapter(VideoListActivity.this, videos);
+//            loadListView.setAdapter(adapter);
+//            is_first_load = false;
+//        } else {
+//            adapter.setData(videos);
+//            adapter.notifyDataSetChanged();
+//        }
+
+        adapter = new VideoListAdapter(VideoListActivity.this, videos);
+        loadListView.setAdapter(adapter);
+        loadListView.onLoadFinish(LoadListView.LOADMORE_SUCCESS);
     }
 
     private void initData() {
@@ -158,6 +189,8 @@ public class VideoListActivity extends Activity {
                 break;
             case FunctionTag.FROM_HOME_LIVE:
 
+                break;
+            case FunctionTag.FROM_HISTORY:
                 break;
             default:
                 break;

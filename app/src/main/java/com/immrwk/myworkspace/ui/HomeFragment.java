@@ -26,6 +26,7 @@ import com.immrwk.myworkspace.AppConfig;
 import com.immrwk.myworkspace.R;
 import com.immrwk.myworkspace.adapter.VideoAdapter;
 import com.immrwk.myworkspace.bean.VideoModel;
+import com.immrwk.myworkspace.db.DatabaseImpl;
 import com.immrwk.myworkspace.function.FunctionTag;
 import com.immrwk.myworkspace.function.UserFunction;
 import com.immrwk.myworkspace.util.KLog;
@@ -49,6 +50,7 @@ public class HomeFragment extends Fragment {
     private RequestQueue mRequestQueue;
     private List<VideoModel> demandVideos = new ArrayList<>();
     private List<VideoModel> liveVideos = new ArrayList<>();
+    private List<VideoModel> historyVideos = new ArrayList<>();
     private int pageNow = 0;
 
     private GridView gv_demand;
@@ -58,6 +60,7 @@ public class HomeFragment extends Fragment {
 
     private LinearLayout ll_livevideo;
     private LinearLayout ll_demandvideo;
+    private LinearLayout ll_videohistory;
 
     /**
      * viewpager
@@ -143,6 +146,13 @@ public class HomeFragment extends Fragment {
                 getAllData(FunctionTag.FROM_HOME_DEMAND);
             }
         });
+        //播放历史
+        ll_videohistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getAllData(FunctionTag.FROM_HISTORY);
+            }
+        });
         mViewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -185,6 +195,12 @@ public class HomeFragment extends Fragment {
                 startVideoPlayActivity(liveVideos.get(position));
             }
         });
+        gv_history.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                startVideoPlayActivity(historyVideos.get(position));
+            }
+        });
     }
 
     private void setIndicator(int position) {
@@ -210,9 +226,10 @@ public class HomeFragment extends Fragment {
     private void initViews() {
         gv_demand = (GridView) getView().findViewById(R.id.gv_demand);
         gv_live = (GridView) getView().findViewById(R.id.gv_live);
-//        gv_history = (GridView) getView().findViewById(R.id.gv_history);
+        gv_history = (GridView) getView().findViewById(R.id.gv_history);
         ll_livevideo = (LinearLayout) getView().findViewById(R.id.ll_livevideo);
         ll_demandvideo = (LinearLayout) getView().findViewById(R.id.ll_demandvideo);
+        ll_videohistory = (LinearLayout) getView().findViewById(R.id.ll_videohistory);
         mViewPager = (ViewPager) getView().findViewById(R.id.view_pager);
         mIndicator = new ImageView[]{
                 (ImageView) getView().findViewById(R.id.dot_indicator1),
@@ -226,10 +243,37 @@ public class HomeFragment extends Fragment {
     private void getAllVideos() {
         //获取推荐视频内容
         getRecommendVideos();
+//        //获取播放历史
+//        getVideoHistory();
         //获取直播视频内容
         getLiveVideos();
         //获取点播视频内容
         getDemandVideos();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getVideoHistory();
+    }
+
+    private VideoAdapter hitoryAdapter;
+
+    private void getVideoHistory() {
+        DatabaseImpl db = DatabaseImpl.getInstance(getActivity());
+        db.open();
+        historyVideos = db.queryVideoHistory();
+        db.close();
+        if (historyVideos.size() <= 4) {
+            hitoryAdapter = new VideoAdapter(getActivity(), historyVideos);
+            gv_history.setAdapter(hitoryAdapter);
+        } else {
+            for (int i = 4; i < historyVideos.size(); i++) {
+                historyVideos.remove(i);
+            }
+            hitoryAdapter = new VideoAdapter(getActivity(), historyVideos);
+            gv_history.setAdapter(hitoryAdapter);
+        }
     }
 
     private void getLiveVideos() {

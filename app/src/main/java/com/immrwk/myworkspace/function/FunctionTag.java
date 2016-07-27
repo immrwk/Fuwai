@@ -26,4 +26,5 @@ public class FunctionTag {
     public static final int FROM_HOME_DEMAND = 101;
     public static final int FROM_CLASSIFY = 102;
     public static final int FROM_SEARCH = 103;
+    public static final int FROM_HISTORY = 104;
 }
