@@ -382,6 +382,11 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 intent.putExtra("url", url);
                 intent.putExtra("imgUrl", thumb);
                 intent.putExtra("videoName", title);
+                intent.putExtra("videoId", mVideoId);
+                intent.putExtra("className", mClassName);
+                intent.putExtra("createDate", mCreateDate);
+                intent.putExtra("click", mClick);
+
                 mContext.sendBroadcast(intent);
 
                 surfaceView.requestLayout();
@@ -808,6 +813,19 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     public static void toFullscreenActivity(Context context, String url, String thumb, String title) {
         FullScreenActivity.toActivity(context, url, thumb, title);
+    }
+
+    private static String mVideoId;
+    private static String mClassName;
+    private static String mCreateDate;
+    private static String mClick;
+
+    public static void toFullscreenActivity(Context context, String url, String thumb, String title, String className, String createDate, String click, String videoId) {
+        FullScreenActivity.toActivity(context, url, thumb, title);
+        mVideoId = videoId;
+        mClassName = className;
+        mCreateDate = createDate;
+        mClick = click;
     }
 
     public void setSkin() {

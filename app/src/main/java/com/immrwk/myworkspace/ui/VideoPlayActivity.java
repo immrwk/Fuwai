@@ -23,6 +23,10 @@ public class VideoPlayActivity extends Activity {
     private String videoName = "";
     private String videoUrl = "";
     private String imgUrl = "";
+    private String className = "";
+    private String createDate = "";
+    private String click = "";
+    private String videoId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,11 @@ public class VideoPlayActivity extends Activity {
         videoUrl = bundle.getString("videoUrl");
         imgUrl = bundle.getString("imgUrl");
         videoName = bundle.getString("videoName");
+        className = bundle.getString("className");
+        createDate = bundle.getString("createDate");
+        click = bundle.getString("click");
+        videoId = bundle.getString("videoId");
+        KLog.e(className+"@@@@@@@@");
     }
 
     private void initViews() {
@@ -62,7 +71,7 @@ public class VideoPlayActivity extends Activity {
     }
 
     private void toFullScreen() {
-        JCVideoPlayer.toFullscreenActivity(this, videoUrl, imgUrl, videoName);
+        JCVideoPlayer.toFullscreenActivity(this, videoUrl, imgUrl, videoName, className, createDate, click, videoId);
     }
 
     @Override

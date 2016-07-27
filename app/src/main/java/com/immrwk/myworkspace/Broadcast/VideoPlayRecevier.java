@@ -18,6 +18,11 @@ public class VideoPlayRecevier extends BroadcastReceiver {
         KLog.e(bundle.toString() + "\n"
                 + bundle.getString("url") + "\n"
                 + bundle.getString("imgUrl") + "\n"
-                + bundle.getString("videoName"));
+                + bundle.getString("videoName") + "\n"
+                + bundle.getString("className") + "\n"
+                + bundle.getString("videoId") + "\n"
+                + bundle.getString("click") + "\n"
+                + bundle.getString("createDate") + "\n"
+        );
     }
 }

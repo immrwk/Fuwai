@@ -331,6 +331,11 @@ public class HomeFragment extends Fragment {
         intent.putExtra("videoUrl", vm.getUrl());
         intent.putExtra("imgUrl", vm.getImgurl());
         intent.putExtra("videoName", vm.getVideoName());
+        intent.putExtra("className", vm.getClassName());
+        intent.putExtra("createDate", vm.getCreateDate());
+        intent.putExtra("click", vm.getClick());
+        intent.putExtra("videoId", vm.getVideoId());
+        KLog.e(vm.toString());
         startActivity(intent);
     }
 
