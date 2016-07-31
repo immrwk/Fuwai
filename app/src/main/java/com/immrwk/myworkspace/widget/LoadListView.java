@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.immrwk.myworkspace.R;
+import com.immrwk.myworkspace.util.KLog;
 
 /**
  * Created by Administrator on 2016/7/5 0005.
@@ -84,6 +85,7 @@ public class LoadListView extends ListView {
         if (iOver == NOMORE_DATA) {
             tv_load_more.setText(getResources().getString(R.string.no_more));
             pb_load_progress.setVisibility(View.GONE);
+//            blLoad = true;
         } else if (iOver == LOADMORE_SUCCESS) {
             blLoad = false;
         } else if (iOver == LOADMORE_FAILED) {

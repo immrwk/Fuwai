@@ -109,7 +109,7 @@ public class DatabaseImpl {
         Cursor cursor = null;
 
         try {
-            cursor = db.query(TableVideoInfos.TABLE_NAME, null, selection, seletion_args, null, null, TableVideoInfos.ID);
+            cursor = db.query(TableVideoInfos.TABLE_NAME, null, selection, seletion_args, null, null, TableVideoInfos.ID + " DESC");
             while (cursor != null && cursor.moveToNext()) {
                 VideoModel video = new VideoModel();
                 video.setVideoName(cursor.getString(cursor.getColumnIndex(TableVideoInfos.NAME)));

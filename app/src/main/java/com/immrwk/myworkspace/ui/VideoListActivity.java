@@ -133,10 +133,7 @@ public class VideoListActivity extends Activity {
                 UserFunction.getLiveVideo(mRequestQueue, pageNow, AppConfig.user.userId, mHandler);
                 break;
             case FunctionTag.FROM_HISTORY:
-                if (is_first_load) {
-                    getVideoHistory();
-                    is_first_load = false;
-                }
+                getVideoHistory();
                 break;
             default:
                 break;
@@ -144,6 +141,11 @@ public class VideoListActivity extends Activity {
     }
 
     private void getVideoHistory() {
+        if (!is_first_load) {
+            loadListView.onLoadFinish(LoadListView.NOMORE_DATA);
+            return;
+        }
+        is_first_load = false;
         DatabaseImpl db = DatabaseImpl.getInstance(VideoListActivity.this);
         db.open();
         videos = db.queryVideoHistory();
@@ -157,10 +159,9 @@ public class VideoListActivity extends Activity {
 //            adapter.setData(videos);
 //            adapter.notifyDataSetChanged();
 //        }
-
         adapter = new VideoListAdapter(VideoListActivity.this, videos);
         loadListView.setAdapter(adapter);
-        loadListView.onLoadFinish(LoadListView.LOADMORE_SUCCESS);
+        loadListView.onLoadFinish(LoadListView.NOMORE_DATA);
     }
 
     private void initData() {

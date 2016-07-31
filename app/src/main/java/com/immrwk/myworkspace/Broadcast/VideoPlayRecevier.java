@@ -25,11 +25,8 @@ public class VideoPlayRecevier extends BroadcastReceiver {
         List<VideoModel> videos = db.queryVideoHistory();
         for (int i = 0; i < videos.size(); i++) {
             if (videos.get(i).getVideoId().equals(videoId)) {
-                /**
-                 * 将该条记录移到最上面
-                 */
-                db.close();
-                return;
+                db.deleteVideoHistory(videos.get(i));
+                break;
             }
         }
 
