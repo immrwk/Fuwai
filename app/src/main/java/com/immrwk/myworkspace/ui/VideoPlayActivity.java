@@ -49,7 +49,6 @@ public class VideoPlayActivity extends Activity {
         createDate = bundle.getString("createDate");
         click = bundle.getString("click");
         videoId = bundle.getString("videoId");
-        KLog.e(className+"@@@@@@@@");
     }
 
     private void initViews() {

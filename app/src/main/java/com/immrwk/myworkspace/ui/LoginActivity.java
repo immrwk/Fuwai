@@ -93,7 +93,6 @@ public class LoginActivity extends Activity {
                 if (!checkInput()) {
                     return;
                 }
-                KLog.e("btn_login islogin=" + isLogin);
                 if (isLogin) {
                     if (mRequestQueue == null) {
                         mRequestQueue = Volley.newRequestQueue(getApplicationContext());

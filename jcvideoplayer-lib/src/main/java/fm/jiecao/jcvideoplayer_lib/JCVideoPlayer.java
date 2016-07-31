@@ -200,7 +200,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public void setUpForFullscreen(String url, String thumb, String title) {
         setSkin();
         this.url = url;
-        Log.e("wangkai", "thumb=" + thumb);
         this.thumb = thumb;
         this.title = title;
         this.ifFullScreen = true;

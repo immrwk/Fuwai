@@ -114,8 +114,6 @@ public class SettingFragment extends Fragment {
      */
     private String getCacheSize() {
         try {
-            Log.i("@@@", "cachedir" + getActivity().getCacheDir());
-            Log.i("@@@", "getExternalCacheDir" + getActivity().getExternalCacheDir());
             return DataCleanManager.getFormatSize(DataCleanManager.getFolderSize(getActivity().getCacheDir())
                     + DataCleanManager.getFolderSize(getActivity().getExternalCacheDir()));
         } catch (Exception e) {

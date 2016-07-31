@@ -384,7 +384,6 @@ public class HomeFragment extends Fragment {
         intent.putExtra("createDate", vm.getCreateDate());
         intent.putExtra("click", vm.getClick());
         intent.putExtra("videoId", vm.getVideoId());
-        KLog.e(vm.toString());
         startActivity(intent);
     }
 
