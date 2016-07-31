@@ -164,6 +164,10 @@ public class LoginActivity extends Activity {
                     JSONObject obj;
                     try {
                         obj = jarr.getJSONObject(0);
+                        if (obj.get("success").equals("false")) {
+                            Toast.makeText(LoginActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         AppConfig.user = new User();
                         AppConfig.user.userId = (obj.getString("userId"));
                     } catch (JSONException e) {
