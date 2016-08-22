@@ -269,12 +269,16 @@ public class HomeFragment extends Fragment {
             return;
         }
         gv_history.setVisibility(View.VISIBLE);
+
         if (historyVideos.size() <= 4) {
             hitoryAdapter = new VideoAdapter(getActivity(), historyVideos);
             gv_history.setAdapter(hitoryAdapter);
         } else {
-            for (int i = 4; i < historyVideos.size(); i++) {
-                historyVideos.remove(i);
+//            for (int i = 4; i < historyVideos.size(); ) {
+//                historyVideos.remove(i);
+//            }
+            while (historyVideos.size() > 4) {
+                historyVideos.remove(4);
             }
             hitoryAdapter = new VideoAdapter(getActivity(), historyVideos);
             gv_history.setAdapter(hitoryAdapter);
